@@ -7,12 +7,16 @@
 #include <string>
 #include <cstring>
 #include <fstream>
+<<<<<<< HEAD
 #include <queue>
+=======
+>>>>>>> f52e327d8d8968be75d4fad638cb28ef2244bdad
 
 #define DIS_INF 2147483647
 
 using namespace std;
 
+<<<<<<< HEAD
 
 class Shape;
 class Graph;
@@ -25,11 +29,23 @@ class Edge{
 		Shape* shape[2];
 
 		Shape*getNeighbor (Shape* s);
+=======
+class Node;
+
+class Edge{
+
+	public:
+		Edge(Node *a, Node *b);
+		Node* node[2];
+
+		Node *getNeighbor(Node *n);
+>>>>>>> f52e327d8d8968be75d4fad638cb28ef2244bdad
 
 		bool operator < (const Edge& rhs) const;
 
 };
 
+<<<<<<< HEAD
 class Shape{
 
 	publicL
@@ -47,6 +63,23 @@ class Shape{
 		int _y0;
 		int _x1;
 		int _y1
+=======
+class Node{
+
+	public:
+		Node(const int& i);
+		void addEdge(Edge *e);
+		void sortEdge();
+
+		int id;
+        int color;
+		bool traveled;
+		vector<Edge *> edge;
+
+		int d;
+		Node *prev;
+		int heap_idx;
+>>>>>>> f52e327d8d8968be75d4fad638cb28ef2244bdad
 };
 
 class Graph{
@@ -56,6 +89,7 @@ class Graph{
 		~Graph();
 		
 		void addEdge(const int& v1, const int& v2);
+<<<<<<< HEAD
 		void sortEdgesOfShape();           //
  		void sortShapesByDegree();      //
  		void sortShapesByID();               //
@@ -76,6 +110,18 @@ class Graph{
 		int alpha;
 		int beta;
 		int omega;
+=======
+		void sortEdgesOfNode();
+        void sortNodesByDegree();
+        void sortNodesByID();
+		void init();
+		Node * getNodeById(const int& id);
+
+		map<int, Node *> nodesMap;
+        vector<Node *> nodes;
+		vector<Edge *> edges;
+		string name;
+>>>>>>> f52e327d8d8968be75d4fad638cb28ef2244bdad
 };
 
 #endif
