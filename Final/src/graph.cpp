@@ -4,6 +4,17 @@
 #include <ctype.h>
 Graph* graph_ = 0;
 
+size_t
+myStrGetTok(const string& str, string& tok, size_t pos = 0,
+            const char del = ' ')
+{
+   size_t begin = str.find_first_not_of(del, pos);
+   if (begin == string::npos) { tok = ""; return begin; }
+   size_t end = str.find_first_of(del, begin);
+   tok = str.substr(begin, end - begin);
+   return end;
+}
+
 Edge::Edge(Shape *a, Shape *b)
 {
 	if ( a->_id <= b->_id ) { shape[0] = a; shape[1] = b; }
@@ -294,42 +305,66 @@ void Graph::BFS(Shape* v, ostream& outfile, int& counter, queue<Shape*>& list)
 		BFS(next, outfile, counter, list);
 	}
 }
+void encolor(Shape* u){
+        vector<Edge* >::iterator it;
+        Shape* node;
+        int flag = 1;
+        it = u->edge.begin();
+        while(it!= u->edge.end()){
 
-void Graph::Color(Shape* v, queue<Shape*>& list)
+            node = (*it)->getNeighbor(u);
+            if(flag == node->color){
+                flag++;
+                it = u->edge.begin();
+            }else{
+                it++;
+            }
+        }
+        u->color = flag;
+    }
+    void Colorvisit(Shape* u){
+        vector<Edge*>::iterator it;
+        it = (u->edge).begin();
+        Shape* node;
+        while(it != (u->edge).end()){
+            node = (*it)->getNeighbor(u);
+            if(node->edge.size() == u->edge.size()){
+                if(node->color == 0){
+                    encolor(node);
+                    Colorvisit(node);
+                }
+            }
+            it++;
+        }
+        return;
+    }
+void Graph::Color()
 {
-	if(list.size() != 0) {
-		Shape* next = list.front();
-		list.pop();
+	    graph_->sortShapesByDegree();
+        //CommonNs::TmUsage tmusg;
+        //CommonNs::TmStat stat;
+        vector<Shape *>::iterator it1;
+        vector<Edge *>::iterator it2;
+        int flag = 1;
+        int max_color = 1;
+        Shape * node ;
 
-		//coloring
-		int print = 1;
-		vector<int> colorlist;
-		for(int i=0; i<v->edge.size(); i++) {
-			colorlist.push_back(v->edge[i]->getNeighbor(v)->color);
-		}
-		sort(colorlist.begin(), colorlist.end());
-		for (int i=0;i<colorlist.size();i++) {
-			if(print == colorlist[i]) {
-				print++;
-			}
-		}
-		v->color = print;
+        it1 = (graph_->shapes).begin();
+        while(it1 != graph_->shapes.end()){
+            (*it1)->color = 0;
+            it1++;
+        }
 
-		Color(next, list);
-	}
-	else {
-		int print = 1;
-		vector<int> colorlist;
-		for(int i=0; i<v->edge.size(); i++) {
-			colorlist.push_back(v->edge[i]->getNeighbor(v)->color);
-		}
-		sort(colorlist.begin(), colorlist.end());
-		for (int i=0;i<colorlist.size();i++) {
-			if(print == colorlist[i]) {
-				print++;
-			}
-		}
-	}
+        it1 = (graph_->shapes).begin();
+        int edgemax = (*it1)->edge.size();
+        //tmusg.periodStart();
+        while(it1!=(graph_->shapes).end()){//first check all max edges degree vertices, and color them
+            //if((*it1)->edge.size() < edgemax){break;}
+            if((*it1)->color != 0){it1++;continue;}
+            encolor(*it1);
+            Colorvisit(*it1);
+            it1++;
+        }
 }
 
 
