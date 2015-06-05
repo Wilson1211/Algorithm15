@@ -1,0 +1,709 @@
+g++ -O2 -I../lib -c graph.cpp -o graph.o
+graph.cpp: In member function ‘void Graph::addEdge(const int&, const int&)’:
+graph.cpp:132:34: error: no match for ‘operator!=’ (operand types are ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ and ‘int’)
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                  ^
+graph.cpp:132:34: note: candidates are:
+In file included from /usr/include/c++/4.8/map:60:0,
+                 from graph.h:6,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_tree.h:221:7: note: bool std::_Rb_tree_iterator<_Tp>::operator!=(const _Self&) const [with _Tp = std::pair<const int, Shape*>; std::_Rb_tree_iterator<_Tp>::_Self = std::_Rb_tree_iterator<std::pair<const int, Shape*> >]
+       operator!=(const _Self& __x) const
+       ^
+/usr/include/c++/4.8/bits/stl_tree.h:221:7: note:   no known conversion for argument 1 from ‘int’ to ‘const _Self& {aka const std::_Rb_tree_iterator<std::pair<const int, Shape*> >&}’
+In file included from /usr/include/c++/4.8/utility:70:0,
+                 from /usr/include/c++/4.8/algorithm:60,
+                 from graph.h:4,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_pair.h:227:5: note: template<class _T1, class _T2> bool std::operator!=(const std::pair<_T1, _T2>&, const std::pair<_T1, _T2>&)
+     operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+     ^
+/usr/include/c++/4.8/bits/stl_pair.h:227:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::pair<_T1, _T2>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/4.8/algorithm:61,
+                 from graph.h:4,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_iterator.h:303:5: note: template<class _Iterator> bool std::operator!=(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_Iterator>&)
+     operator!=(const reverse_iterator<_Iterator>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_iterator.h:303:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/4.8/algorithm:61,
+                 from graph.h:4,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_iterator.h:353:5: note: template<class _IteratorL, class _IteratorR> bool std::operator!=(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)
+     operator!=(const reverse_iterator<_IteratorL>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_iterator.h:353:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/ext/alloc_traits.h:38:0,
+                 from /usr/include/c++/4.8/bits/stl_construct.h:61,
+                 from /usr/include/c++/4.8/bits/stl_tempbuf.h:60,
+                 from /usr/include/c++/4.8/bits/stl_algo.h:62,
+                 from /usr/include/c++/4.8/algorithm:62,
+                 from graph.h:4,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/allocator.h:138:5: note: template<class _T1, class _T2> bool std::operator!=(const std::allocator<_Tp1>&, const std::allocator<_T2>&)
+     operator!=(const allocator<_T1>&, const allocator<_T2>&)
+     ^
+/usr/include/c++/4.8/bits/allocator.h:138:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::allocator<_Tp1>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/ext/alloc_traits.h:38:0,
+                 from /usr/include/c++/4.8/bits/stl_construct.h:61,
+                 from /usr/include/c++/4.8/bits/stl_tempbuf.h:60,
+                 from /usr/include/c++/4.8/bits/stl_algo.h:62,
+                 from /usr/include/c++/4.8/algorithm:62,
+                 from graph.h:4,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/allocator.h:143:5: note: template<class _Tp> bool std::operator!=(const std::allocator<_Tp1>&, const std::allocator<_Tp1>&)
+     operator!=(const allocator<_Tp>&, const allocator<_Tp>&)
+     ^
+/usr/include/c++/4.8/bits/allocator.h:143:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::allocator<_Tp1>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/vector:64:0,
+                 from graph.h:5,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_vector.h:1428:5: note: template<class _Tp, class _Alloc> bool std::operator!=(const std::vector<_Tp, _Alloc>&, const std::vector<_Tp, _Alloc>&)
+     operator!=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+     ^
+/usr/include/c++/4.8/bits/stl_vector.h:1428:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::vector<_Tp, _Alloc>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/map:60:0,
+                 from graph.h:6,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_tree.h:316:5: note: template<class _Val> bool std::operator!=(const std::_Rb_tree_iterator<_Tp>&, const std::_Rb_tree_const_iterator<_Val>&)
+     operator!=(const _Rb_tree_iterator<_Val>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_tree.h:316:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   mismatched types ‘const std::_Rb_tree_const_iterator<_Val>’ and ‘int’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/map:60:0,
+                 from graph.h:6,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_tree.h:927:5: note: template<class _Key, class _Val, class _KeyOfValue, class _Compare, class _Alloc> bool std::operator!=(const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>&, const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>&)
+     operator!=(const _Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_tree.h:927:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/map:61:0,
+                 from graph.h:6,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_map.h:986:5: note: template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator!=(const std::map<_Key, _Tp, _Compare, _Alloc>&, const std::map<_Key, _Tp, _Compare, _Alloc>&)
+     operator!=(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_map.h:986:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::map<_Key, _Tp, _Compare, _Alloc>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/map:62:0,
+                 from graph.h:6,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_multimap.h:888:5: note: template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator!=(const std::multimap<_Key, _Tp, _Compare, _Alloc>&, const std::multimap<_Key, _Tp, _Compare, _Alloc>&)
+     operator!=(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_multimap.h:888:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::multimap<_Key, _Tp, _Compare, _Alloc>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/bits/char_traits.h:40:0,
+                 from /usr/include/c++/4.8/string:40,
+                 from graph.h:7,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/postypes.h:221:5: note: template<class _StateT> bool std::operator!=(const std::fpos<_StateT>&, const std::fpos<_StateT>&)
+     operator!=(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+     ^
+/usr/include/c++/4.8/bits/postypes.h:221:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::fpos<_StateT>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from graph.h:7,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/basic_string.h:2532:5: note: template<class _CharT, class _Traits, class _Alloc> bool std::operator!=(const std::basic_string<_CharT, _Traits, _Alloc>&, const std::basic_string<_CharT, _Traits, _Alloc>&)
+     operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2532:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::basic_string<_CharT, _Traits, _Alloc>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from graph.h:7,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/basic_string.h:2544:5: note: template<class _CharT, class _Traits, class _Alloc> bool std::operator!=(const _CharT*, const std::basic_string<_CharT, _Traits, _Alloc>&)
+     operator!=(const _CharT* __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2544:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   mismatched types ‘const _CharT*’ and ‘std::_Rb_tree_iterator<std::pair<const int, Shape*> >’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from graph.h:7,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/basic_string.h:2556:5: note: template<class _CharT, class _Traits, class _Alloc> bool std::operator!=(const std::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*)
+     operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2556:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::basic_string<_CharT, _Traits, _Alloc>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/bits/locale_facets.h:48:0,
+                 from /usr/include/c++/4.8/bits/basic_ios.h:37,
+                 from /usr/include/c++/4.8/ios:44,
+                 from /usr/include/c++/4.8/istream:38,
+                 from /usr/include/c++/4.8/fstream:38,
+                 from graph.h:9,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/streambuf_iterator.h:210:5: note: template<class _CharT, class _Traits> bool std::operator!=(const std::istreambuf_iterator<_CharT, _Traits>&, const std::istreambuf_iterator<_CharT, _Traits>&)
+     operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
+     ^
+/usr/include/c++/4.8/bits/streambuf_iterator.h:210:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::istreambuf_iterator<_CharT, _Traits>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/deque:64:0,
+                 from /usr/include/c++/4.8/queue:60,
+                 from graph.h:10,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_deque.h:260:5: note: template<class _Tp, class _Ref, class _Ptr> bool std::operator!=(const std::_Deque_iterator<_Tp, _Ref, _Ptr>&, const std::_Deque_iterator<_Tp, _Ref, _Ptr>&)
+     operator!=(const _Deque_iterator<_Tp, _Ref, _Ptr>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_deque.h:260:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::_Deque_iterator<_Tp, _Ref, _Ptr>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/deque:64:0,
+                 from /usr/include/c++/4.8/queue:60,
+                 from graph.h:10,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_deque.h:267:5: note: template<class _Tp, class _RefL, class _PtrL, class _RefR, class _PtrR> bool std::operator!=(const std::_Deque_iterator<_Tp, _Ref, _Ptr>&, const std::_Deque_iterator<_Tp, _RefR, _PtrR>&)
+     operator!=(const _Deque_iterator<_Tp, _RefL, _PtrL>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_deque.h:267:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::_Deque_iterator<_Tp, _Ref, _Ptr>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/deque:64:0,
+                 from /usr/include/c++/4.8/queue:60,
+                 from graph.h:10,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_deque.h:1983:5: note: template<class _Tp, class _Alloc> bool std::operator!=(const std::deque<_Tp, _Alloc>&, const std::deque<_Tp, _Alloc>&)
+     operator!=(const deque<_Tp, _Alloc>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_deque.h:1983:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::deque<_Tp, _Alloc>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+In file included from /usr/include/c++/4.8/queue:64:0,
+                 from graph.h:10,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_queue.h:292:5: note: template<class _Tp, class _Seq> bool std::operator!=(const std::queue<_Tp, _Seq>&, const std::queue<_Tp, _Seq>&)
+     operator!=(const queue<_Tp, _Seq>& __x, const queue<_Tp, _Seq>& __y)
+     ^
+/usr/include/c++/4.8/bits/stl_queue.h:292:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:132:37: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::queue<_Tp, _Seq>’
+  if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+                                     ^
+graph.cpp:136:33: error: no match for ‘operator!=’ (operand types are ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ and ‘int’)
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                 ^
+graph.cpp:136:33: note: candidates are:
+In file included from /usr/include/c++/4.8/map:60:0,
+                 from graph.h:6,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_tree.h:221:7: note: bool std::_Rb_tree_iterator<_Tp>::operator!=(const _Self&) const [with _Tp = std::pair<const int, Shape*>; std::_Rb_tree_iterator<_Tp>::_Self = std::_Rb_tree_iterator<std::pair<const int, Shape*> >]
+       operator!=(const _Self& __x) const
+       ^
+/usr/include/c++/4.8/bits/stl_tree.h:221:7: note:   no known conversion for argument 1 from ‘int’ to ‘const _Self& {aka const std::_Rb_tree_iterator<std::pair<const int, Shape*> >&}’
+In file included from /usr/include/c++/4.8/utility:70:0,
+                 from /usr/include/c++/4.8/algorithm:60,
+                 from graph.h:4,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_pair.h:227:5: note: template<class _T1, class _T2> bool std::operator!=(const std::pair<_T1, _T2>&, const std::pair<_T1, _T2>&)
+     operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+     ^
+/usr/include/c++/4.8/bits/stl_pair.h:227:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::pair<_T1, _T2>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/4.8/algorithm:61,
+                 from graph.h:4,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_iterator.h:303:5: note: template<class _Iterator> bool std::operator!=(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_Iterator>&)
+     operator!=(const reverse_iterator<_Iterator>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_iterator.h:303:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/4.8/algorithm:61,
+                 from graph.h:4,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_iterator.h:353:5: note: template<class _IteratorL, class _IteratorR> bool std::operator!=(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)
+     operator!=(const reverse_iterator<_IteratorL>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_iterator.h:353:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/ext/alloc_traits.h:38:0,
+                 from /usr/include/c++/4.8/bits/stl_construct.h:61,
+                 from /usr/include/c++/4.8/bits/stl_tempbuf.h:60,
+                 from /usr/include/c++/4.8/bits/stl_algo.h:62,
+                 from /usr/include/c++/4.8/algorithm:62,
+                 from graph.h:4,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/allocator.h:138:5: note: template<class _T1, class _T2> bool std::operator!=(const std::allocator<_Tp1>&, const std::allocator<_T2>&)
+     operator!=(const allocator<_T1>&, const allocator<_T2>&)
+     ^
+/usr/include/c++/4.8/bits/allocator.h:138:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::allocator<_Tp1>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/ext/alloc_traits.h:38:0,
+                 from /usr/include/c++/4.8/bits/stl_construct.h:61,
+                 from /usr/include/c++/4.8/bits/stl_tempbuf.h:60,
+                 from /usr/include/c++/4.8/bits/stl_algo.h:62,
+                 from /usr/include/c++/4.8/algorithm:62,
+                 from graph.h:4,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/allocator.h:143:5: note: template<class _Tp> bool std::operator!=(const std::allocator<_Tp1>&, const std::allocator<_Tp1>&)
+     operator!=(const allocator<_Tp>&, const allocator<_Tp>&)
+     ^
+/usr/include/c++/4.8/bits/allocator.h:143:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::allocator<_Tp1>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/vector:64:0,
+                 from graph.h:5,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_vector.h:1428:5: note: template<class _Tp, class _Alloc> bool std::operator!=(const std::vector<_Tp, _Alloc>&, const std::vector<_Tp, _Alloc>&)
+     operator!=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+     ^
+/usr/include/c++/4.8/bits/stl_vector.h:1428:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::vector<_Tp, _Alloc>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/map:60:0,
+                 from graph.h:6,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_tree.h:316:5: note: template<class _Val> bool std::operator!=(const std::_Rb_tree_iterator<_Tp>&, const std::_Rb_tree_const_iterator<_Val>&)
+     operator!=(const _Rb_tree_iterator<_Val>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_tree.h:316:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   mismatched types ‘const std::_Rb_tree_const_iterator<_Val>’ and ‘int’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/map:60:0,
+                 from graph.h:6,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_tree.h:927:5: note: template<class _Key, class _Val, class _KeyOfValue, class _Compare, class _Alloc> bool std::operator!=(const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>&, const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>&)
+     operator!=(const _Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_tree.h:927:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/map:61:0,
+                 from graph.h:6,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_map.h:986:5: note: template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator!=(const std::map<_Key, _Tp, _Compare, _Alloc>&, const std::map<_Key, _Tp, _Compare, _Alloc>&)
+     operator!=(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_map.h:986:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::map<_Key, _Tp, _Compare, _Alloc>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/map:62:0,
+                 from graph.h:6,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_multimap.h:888:5: note: template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator!=(const std::multimap<_Key, _Tp, _Compare, _Alloc>&, const std::multimap<_Key, _Tp, _Compare, _Alloc>&)
+     operator!=(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_multimap.h:888:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::multimap<_Key, _Tp, _Compare, _Alloc>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/bits/char_traits.h:40:0,
+                 from /usr/include/c++/4.8/string:40,
+                 from graph.h:7,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/postypes.h:221:5: note: template<class _StateT> bool std::operator!=(const std::fpos<_StateT>&, const std::fpos<_StateT>&)
+     operator!=(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+     ^
+/usr/include/c++/4.8/bits/postypes.h:221:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::fpos<_StateT>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from graph.h:7,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/basic_string.h:2532:5: note: template<class _CharT, class _Traits, class _Alloc> bool std::operator!=(const std::basic_string<_CharT, _Traits, _Alloc>&, const std::basic_string<_CharT, _Traits, _Alloc>&)
+     operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2532:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::basic_string<_CharT, _Traits, _Alloc>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from graph.h:7,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/basic_string.h:2544:5: note: template<class _CharT, class _Traits, class _Alloc> bool std::operator!=(const _CharT*, const std::basic_string<_CharT, _Traits, _Alloc>&)
+     operator!=(const _CharT* __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2544:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   mismatched types ‘const _CharT*’ and ‘std::_Rb_tree_iterator<std::pair<const int, Shape*> >’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from graph.h:7,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/basic_string.h:2556:5: note: template<class _CharT, class _Traits, class _Alloc> bool std::operator!=(const std::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*)
+     operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2556:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::basic_string<_CharT, _Traits, _Alloc>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/bits/locale_facets.h:48:0,
+                 from /usr/include/c++/4.8/bits/basic_ios.h:37,
+                 from /usr/include/c++/4.8/ios:44,
+                 from /usr/include/c++/4.8/istream:38,
+                 from /usr/include/c++/4.8/fstream:38,
+                 from graph.h:9,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/streambuf_iterator.h:210:5: note: template<class _CharT, class _Traits> bool std::operator!=(const std::istreambuf_iterator<_CharT, _Traits>&, const std::istreambuf_iterator<_CharT, _Traits>&)
+     operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
+     ^
+/usr/include/c++/4.8/bits/streambuf_iterator.h:210:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::istreambuf_iterator<_CharT, _Traits>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/deque:64:0,
+                 from /usr/include/c++/4.8/queue:60,
+                 from graph.h:10,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_deque.h:260:5: note: template<class _Tp, class _Ref, class _Ptr> bool std::operator!=(const std::_Deque_iterator<_Tp, _Ref, _Ptr>&, const std::_Deque_iterator<_Tp, _Ref, _Ptr>&)
+     operator!=(const _Deque_iterator<_Tp, _Ref, _Ptr>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_deque.h:260:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::_Deque_iterator<_Tp, _Ref, _Ptr>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/deque:64:0,
+                 from /usr/include/c++/4.8/queue:60,
+                 from graph.h:10,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_deque.h:267:5: note: template<class _Tp, class _RefL, class _PtrL, class _RefR, class _PtrR> bool std::operator!=(const std::_Deque_iterator<_Tp, _Ref, _Ptr>&, const std::_Deque_iterator<_Tp, _RefR, _PtrR>&)
+     operator!=(const _Deque_iterator<_Tp, _RefL, _PtrL>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_deque.h:267:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::_Deque_iterator<_Tp, _Ref, _Ptr>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/deque:64:0,
+                 from /usr/include/c++/4.8/queue:60,
+                 from graph.h:10,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_deque.h:1983:5: note: template<class _Tp, class _Alloc> bool std::operator!=(const std::deque<_Tp, _Alloc>&, const std::deque<_Tp, _Alloc>&)
+     operator!=(const deque<_Tp, _Alloc>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_deque.h:1983:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::deque<_Tp, _Alloc>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+In file included from /usr/include/c++/4.8/queue:64:0,
+                 from graph.h:10,
+                 from graph.cpp:1:
+/usr/include/c++/4.8/bits/stl_queue.h:292:5: note: template<class _Tp, class _Seq> bool std::operator!=(const std::queue<_Tp, _Seq>&, const std::queue<_Tp, _Seq>&)
+     operator!=(const queue<_Tp, _Seq>& __x, const queue<_Tp, _Seq>& __y)
+     ^
+/usr/include/c++/4.8/bits/stl_queue.h:292:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/_G_config.h:15:0,
+                 from /usr/include/libio.h:31,
+                 from /usr/include/stdio.h:74,
+                 from /usr/include/c++/4.8/cstdio:42,
+                 from /usr/include/c++/4.8/fstream:41,
+                 from graph.h:9,
+                 from graph.cpp:1:
+graph.cpp:136:36: note:   ‘std::map<int, Shape*>::iterator {aka std::_Rb_tree_iterator<std::pair<const int, Shape*> >}’ is not derived from ‘const std::queue<_Tp, _Seq>’
+  if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+                                    ^
+make: *** [graph.o] Error 1

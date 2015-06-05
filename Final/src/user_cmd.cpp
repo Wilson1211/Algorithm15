@@ -324,12 +324,8 @@ bool ColorCmd::exec(int argc, char **argv) {
         fprintf(stderr, "**ERROR ColorCmd::exec(): need read file before doing searching\n");
         return false;
     }
-
-
     CommonNs::TmUsage tmusg;
     CommonNs::TmStat stat;
-
-
     //************************
     tmusg.periodStart();  
     graph_->Color();
@@ -367,7 +363,7 @@ LinkCmd::~LinkCmd() {}
 
 bool LinkCmd::exec(int argc, char **argv) {
     //optMgr_.parse(argc, argv);
-    cout << "Hi" << endl;
+    //cout << "Hi" << endl;
     if (optMgr_.getParsedOpt("h")) {
         optMgr_.usage();
         return true;
