@@ -65,6 +65,7 @@ class Graph{
 		void DFS(Shape* v, ostream& outfile, int& counter);
 		void BFS(Shape* v, ostream& outfile, int& counter, queue<Shape*>& list);
 		void Color();
+		void connect();
 		void reset_travel();
 		Shape * getShapeById(const int& id);
 

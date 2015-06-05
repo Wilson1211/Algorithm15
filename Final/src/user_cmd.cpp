@@ -402,8 +402,8 @@ LinkCmd::LinkCmd(const char * const name) : Cmd(name) {
 LinkCmd::~LinkCmd() {}
 
 bool LinkCmd::exec(int argc, char **argv) {
-    optMgr_.parse(argc, argv);
-
+    //optMgr_.parse(argc, argv);
+    cout << "Hi" << endl;
     if (optMgr_.getParsedOpt("h")) {
         optMgr_.usage();
         return true;
@@ -414,7 +414,7 @@ bool LinkCmd::exec(int argc, char **argv) {
         return false;
     }
 
-
+    graph_->connect();
 
 
 

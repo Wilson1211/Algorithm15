@@ -6,26 +6,6 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-int alpha = 10 , beta = 10;
-class Shape{
-	public:
-		Shape();
-		Shape(int index, int x0, int y0, int x1, int y1) : _id(index), _x0(x0), _y0(y0), _x1(x1), _y1(y1) {};
-		//void addEdge(Edge *e);
-		//void sortEdge();
-/*
-		bool traveled;
-		int color;*/
-		int _id;
-		string name;/*
-		vector<Edge*>edge;
-*/
-		int _x0;
-		int _y0;
-		int _x1;
-		int _y1;
-};
-vector<Shape*> shapes;
 
 ///////////////////////
 
@@ -74,17 +54,4 @@ void connect() {
 						addEdge(i->second->_id, j->second->_id);
 				}
 	}
-}
-
-int main() {
-	Shape *a = new Shape(1, 1, 1, 8, 8);
-	Shape *b = new Shape(2, 11, 1, 12, 20);
-	Shape *c = new Shape(3, 1, 11, 7, 20);
-
-	shapes.push_back(a);
-	shapes.push_back(b);
-	shapes.push_back(c);
-
-	connect();
-	return 0;
 }
