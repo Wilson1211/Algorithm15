@@ -16,8 +16,8 @@ myStrGetTok(const string& str, string& tok, size_t pos = 0,
 }
 
 Edge::Edge(Shape *a, Shape *b)
-{
-	if ( a->_id <= b->_id ) { shape[0] = a; shape[1] = b; }
+{//cout<<"Egg1";
+	if ( a->_id <= b->_id ) { shape[0] = a; shape[1] = b;}
 	else { shape[0] = b; shape[1] = a; }
 }
 
@@ -129,13 +129,12 @@ void Graph::addEdge(const int& v1, const int& v2)
 {
 	Shape *a, *b;
 	map<int, Shape*>::iterator it = shapesMap.find(v1);
-	if(it != shapesMap.end() && (it != NULL)) {a = (*it).second;}
+	if(it != shapesMap.end() /*&& (it != NULL)*/) {a = (*it).second;}
 	else cerr << "Shape" << v1 << "doesn't exist. " << endl;
 
 	it = shapesMap.find(v2);
-	if(it != shapesMap.end()&& (it != NULL)) {a = (*it).second;}
+	if(it != shapesMap.end()/*&& (it != NULL)*/) {b = (*it).second;}
 	else cerr << "Shape" << v2 << "doesn't exist. " << endl;
-
 	Edge* e = new Edge(a, b);
 	edges.push_back(e);
 
@@ -379,6 +378,7 @@ void Graph::printShapes()
 		for(int i=0; i<shape->edge.size();i++) {
 			cout << "	-shape<" << shape->edge[i]->getNeighbor(shape)->_id << endl;
 		}
+		cout<< "	color"<<shape->color <<endl;
 	}
 }
 

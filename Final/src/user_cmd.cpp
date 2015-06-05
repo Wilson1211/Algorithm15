@@ -296,7 +296,7 @@ ColorCmd::ColorCmd(const char * const name) : Cmd(name) {
     opt->addFlag("h");
     opt->addFlag("help");
     optMgr_.regOpt(opt);
-
+/*
     opt = new Opt(Opt::STR_REQ,
                   "start coloring from the v0. Default is greedy",
                   "greedy algorithm");
@@ -307,7 +307,7 @@ ColorCmd::ColorCmd(const char * const name) : Cmd(name) {
                   "output file. Default is <intput>_color.dot",
                   "OUTPUT");
     opt->addFlag("o");
-    optMgr_.regOpt(opt);
+    optMgr_.regOpt(opt);*/
 }
 
 ColorCmd::~ColorCmd() {}
@@ -325,39 +325,8 @@ bool ColorCmd::exec(int argc, char **argv) {
         return false;
     }
 
-    //parse source node
-    string alogr ;
-    if (optMgr_.getParsedOpt("m"))
-        alogr= optMgr_.getParsedValue("m"); //cout << "srcnode: " << srcnode << endl;
-    if(alogr != "greedy") {
-        fprintf(stderr, "**ERROR ColorCmd::exec(): algorithm: greedy. \n");
-        return false;
-    }
-
-    string fname = graph_->name;
-    if (optMgr_.getParsedOpt("o"))
-        fname = optMgr_.getParsedValue("o");  //cout << "Output file name: " << fname << endl;
-    else 
-        fname += "_color.dot" ;
-
-    ofstream outfile(fname.c_str(), ios::out);
     CommonNs::TmUsage tmusg;
     CommonNs::TmStat stat;
-
-    outfile << "// Coloring produced by graphlab" << endl;
-    outfile << "graph " << graph_->name << "_color {" << endl;
-    
-    queue<Shape*> list;
-    graph_->sortShapesByDegree(); //for(int i=0; i < graph_->nodes.size(); i++) cout << "v" << graph_->nodes[i]->id << endl;
-    for (int i=0; i<graph_->shapes.size(); i++) {
-        list.push(graph_->shapes[i]);
-    }
-    Shape* src;
-    if(list.size() != 0) {  
-        src = list.front();
-        list.pop();
-    }
-    int colornum=1;
 
     //************************
     tmusg.periodStart();  
@@ -365,7 +334,7 @@ bool ColorCmd::exec(int argc, char **argv) {
 
     tmusg.getPeriodUsage(stat);
     //************************
-    
+    /*
     for(int i=0; i<graph_->edges.size();i++){
         outfile << "v" << graph_->edges[i]->shape[0]->_id << " -- v" << graph_->edges[i]->shape[1]->_id << ";" << endl;
     }
@@ -374,14 +343,7 @@ bool ColorCmd::exec(int argc, char **argv) {
     for(int i=0; i < graph_->shapes.size(); i++) {
         if(graph_->shapes[i]->color  > colornum) colornum = graph_->shapes[i]->color ;
         outfile << "v" << graph_->shapes[i]->_id << "[ label = \"v" << graph_->shapes[i]->_id<< "_color" <<  graph_->shapes[i]->color << "\"];" << endl;
-    }
-    outfile << "}" << endl;
-    outfile << "// vertices = " << graph_->shapes.size() << endl;;
-    outfile << "// edges = " << graph_->edges.size() << endl;
-    outfile <<"// number_of_colors =" << colornum << endl;
-    outfile << "// runtime = "<< (stat.uTime + stat.sTime) / 1000000.0 << " sec" << endl;
-    outfile << "// memory = " << stat.vmPeak / 1000.0 << " MB" << endl;
-
+    }*/
     graph_->reset_travel();
     return true;
 }
@@ -403,7 +365,7 @@ LinkCmd::~LinkCmd() {}
 
 bool LinkCmd::exec(int argc, char **argv) {
     //optMgr_.parse(argc, argv);
-    cout << "Hi" << endl;
+    //cout << "Hi" << endl;
     if (optMgr_.getParsedOpt("h")) {
         optMgr_.usage();
         return true;
