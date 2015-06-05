@@ -361,7 +361,7 @@ bool ColorCmd::exec(int argc, char **argv) {
 
     //************************
     tmusg.periodStart();  
-    graph_->Color(src, list); 
+    graph_->Color();
 
     tmusg.getPeriodUsage(stat);
     //************************

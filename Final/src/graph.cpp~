@@ -372,7 +372,6 @@ void Graph::printShapes()
 {
 	map<int, Shape *>::iterator it;
 	
-	cout << alpha << ", " << beta << ", " << omega << endl;
 	for ( it = shapesMap.begin() ; it != shapesMap.end() ; it++ )
 	{
 		Shape *shape = (*it).second;

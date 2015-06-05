@@ -64,7 +64,7 @@ class Graph{
 		bool readFile( char* filename);
 		void DFS(Shape* v, ostream& outfile, int& counter);
 		void BFS(Shape* v, ostream& outfile, int& counter, queue<Shape*>& list);
-		void Color(Shape*  v, queue<Shape*>& list);
+		void Color();
 		void reset_travel();
 		Shape * getShapeById(const int& id);
 
