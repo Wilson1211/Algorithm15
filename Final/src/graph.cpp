@@ -394,6 +394,8 @@ void Graph::Color()
 void Graph::printShapes()
 {
 	map<int, Shape *>::iterator it;
+	
+	cout << alpha << ", " << beta << ", " << omega << endl;
 	for ( it = shapesMap.begin() ; it != shapesMap.end() ; it++ )
 	{
 		Shape *shape = (*it).second;
@@ -403,7 +405,7 @@ void Graph::printShapes()
 		for(int i=0; i<shape->edge.size();i++) {
 			cout << "	-shape" << shape->edge[i]->getNeighbor(shape)->_id << endl;
 		}
-		cout<< "	color"<<shape->color <<endl;
+		cout << "	color:" << shape->color << endl;
 	}
 }
 
@@ -471,3 +473,11 @@ void Graph::connect() {
 		}
 	}
 }
+<<<<<<< HEAD
+=======
+
+void Graph::output(ostream& outfile)
+{
+	outfile <<  "" <<endl;
+}
+>>>>>>> eac948b0d8dadf6c39dc6b22f3d6122ad13927d1

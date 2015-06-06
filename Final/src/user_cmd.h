@@ -75,4 +75,14 @@ public:
     bool exec(int argc, char **argv);
 };
 
+//output
+class OutputCmd : public CommonNs::Cmd {
+public:
+         OutputCmd(const char * const name);
+         ~OutputCmd();
+
+    bool exec(int argc, char **argv);
+};
+
+
 #endif

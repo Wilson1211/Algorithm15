@@ -324,10 +324,8 @@ bool ColorCmd::exec(int argc, char **argv) {
         fprintf(stderr, "**ERROR ColorCmd::exec(): need read file before doing searching\n");
         return false;
     }
-
     CommonNs::TmUsage tmusg;
     CommonNs::TmStat stat;
-
     //************************
     tmusg.periodStart();  
     graph_->Color();
@@ -414,7 +412,7 @@ bool PrintCmd::exec(int argc, char **argv) {
     }
 
      if(graph_ == 0) {
-        fprintf(stderr, "**ERROR ColorCmd::exec(): need to read file before doing linking\n");
+        fprintf(stderr, "**ERROR ColorCmd::exec(): need to read file before doing Print\n");
         return false;
     }
 
@@ -430,6 +428,52 @@ bool PrintCmd::exec(int argc, char **argv) {
     }
 
     graph_->printShapes();
+
+    return true;
+}
+
+//output
+OutputCmd::OutputCmd(const char * const name) : Cmd(name) {
+    optMgr_.setShortDes("Output the result to a txt file");
+    optMgr_.setDes("Output file. [-o|-p]:  output file | print on screen. default is -o");
+
+    Opt *opt = new Opt(Opt::BOOL, "print usage", "");
+    opt->addFlag("h");
+    opt->addFlag("help");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ,
+                  "output file.\"Output \" ",
+                  "OUTPUT");
+    opt->addFlag("o");
+    optMgr_.regOpt(opt);
+
+     opt = new Opt(Opt::STR_REQ,
+                  "print the result. ",
+                  "P");
+    opt->addFlag("p");
+    optMgr_.regOpt(opt);
+
+}
+
+OutputCmd::~OutputCmd() {}
+
+bool OutputCmd::exec(int argc, char **argv) {
+    optMgr_.parse(argc, argv);
+
+    if (optMgr_.getParsedOpt("h")) {
+        optMgr_.usage();
+        return true;
+    }
+
+     if(graph_ == 0) {
+        fprintf(stderr, "**ERROR ColorCmd::exec(): need to read file before doing Output\n");
+        return false;
+    }
+
+    if (optMgr_.getParsedOpt("p")) // print on screen
+
+
 
     return true;
 }

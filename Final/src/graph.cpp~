@@ -16,8 +16,13 @@ myStrGetTok(const string& str, string& tok, size_t pos = 0,
 }
 
 Edge::Edge(Shape *a, Shape *b)
+<<<<<<< HEAD
 {//cout<<"Egg1";
 	if ( a->_id <= b->_id ) { shape[0] = a; shape[1] = b;}
+=======
+{
+	if ( a->_id <= b->_id ) { shape[0] = a; shape[1] = b; }
+>>>>>>> eac948b0d8dadf6c39dc6b22f3d6122ad13927d1
 	else { shape[0] = b; shape[1] = a; }
 }
 
@@ -127,6 +132,7 @@ void Graph::addEdge(const int& v1, const int& v2)
 
 void Graph::addEdge(const int& v1, const int& v2)
 {
+<<<<<<< HEAD
 	cout << "(" << v1 << ", " << v2 <<")\n";
 	Shape *a, *b;
 	map<int, Shape*>::iterator it = shapesMap.find(v1);
@@ -136,6 +142,17 @@ void Graph::addEdge(const int& v1, const int& v2)
 	it = shapesMap.find(v2);
 	if(it != shapesMap.end()/*&& (it != NULL)*/) {b = (*it).second;}
 	else cerr << "Shape" << v2 << "doesn't exist. " << endl;
+=======
+	Shape *a, *b;
+	map<int, Shape*>::iterator it = shapesMap.find(v1);
+	if(it != shapesMap.end()) a = (*it).second;
+	else cerr << "Shape" << v1 << "doesn't exist. " << endl;
+
+	it = shapesMap.find(v2);
+	if(it != shapesMap.end()) a = (*it).second;
+	else cerr << "Shape" << v2 << "doesn't exist. " << endl;
+
+>>>>>>> eac948b0d8dadf6c39dc6b22f3d6122ad13927d1
 	Edge* e = new Edge(a, b);
 	edges.push_back(e);
 
@@ -199,6 +216,7 @@ Shape * Graph::getShapeById(const int& id)
 	return shapesMap[id];
 }
 
+<<<<<<< HEAD
 #include <stdio.h>
 bool Graph::readFile( char* filename) {
 	/////C style //////
@@ -221,6 +239,11 @@ bool Graph::readFile( char* filename) {
 	else	return false;
 	//////C++ style///////
  /*	fstream fin(filename);
+=======
+
+bool Graph::readFile( char* filename) {
+ 	fstream fin(filename);
+>>>>>>> eac948b0d8dadf6c39dc6b22f3d6122ad13927d1
 
 	if(fin.is_open()) {
 		char c; //get single char
@@ -267,15 +290,25 @@ bool Graph::readFile( char* filename) {
 				shape_count++;
 			}
 			// Shape (index, x0, y0, x1, y1)
+<<<<<<< HEAD
 			Shape* s = new Shape(++index, coordinate[0], coordinate[1], coordinate[2], coordinate[3] );
 			shapes.push_back(s);
 			shapesMap[index] = s;
+=======
+			Shape* s = new Shape(index, coordinate[0], coordinate[1], coordinate[2], coordinate[3] );
+			shapes.push_back(s);
+			shapesMap[index++] = s;
+>>>>>>> eac948b0d8dadf6c39dc6b22f3d6122ad13927d1
 		}
 		//shapes[0] is dummy shape (0,0) (0,0)
 	}
 	else {
 		return false;
+<<<<<<< HEAD
 	}*/
+=======
+	}
+>>>>>>> eac948b0d8dadf6c39dc6b22f3d6122ad13927d1
 	return true;
 }
 
@@ -390,16 +423,27 @@ void Graph::Color()
 void Graph::printShapes()
 {
 	map<int, Shape *>::iterator it;
+<<<<<<< HEAD
+=======
+	
+>>>>>>> eac948b0d8dadf6c39dc6b22f3d6122ad13927d1
 	for ( it = shapesMap.begin() ; it != shapesMap.end() ; it++ )
 	{
 		Shape *shape = (*it).second;
 		cout << "#shape<"<< shape->_id << ">" << endl;
+<<<<<<< HEAD
 		cout << shape->_x0 << ", " << shape->_y0 << ", " << shape->_x1 << ", " << shape->_y1 << endl;
+=======
+		cout << shape->_x0 << ", " << shape->_y0 << ", " <<shape->_x1 << ", " << shape->_y1 << endl;
+>>>>>>> eac948b0d8dadf6c39dc6b22f3d6122ad13927d1
 		cout << "	edges: " << endl;
 		for(int i=0; i<shape->edge.size();i++) {
 			cout << "	-shape<" << shape->edge[i]->getNeighbor(shape)->_id << endl;
 		}
+<<<<<<< HEAD
 		cout<< "	color"<<shape->color <<endl;
+=======
+>>>>>>> eac948b0d8dadf6c39dc6b22f3d6122ad13927d1
 	}
 }
 
@@ -412,6 +456,7 @@ void Graph::reset_travel()
 		shape->traveled = false;
 	}
 }
+<<<<<<< HEAD
 
 
 #include <map>
@@ -467,3 +512,5 @@ void Graph::connect() {
 		}
 	}
 }
+=======
+>>>>>>> eac948b0d8dadf6c39dc6b22f3d6122ad13927d1

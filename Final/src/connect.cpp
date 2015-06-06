@@ -24,9 +24,9 @@ void connect() {
 		y[-shapes[i]->_y1 ] = shapes[i];
 	}
 
-	for(map<int, Shape*>::iterator i = x.begin(), j; i != x.end(); ++i) {
-		if(i->first < 0) {
-			for(j = i; j != x.end() && abs(j->first) < abs(i->first) + alpha; ++j)
+	for(map<int, Shape*>::iterator i = x.begin(), j; i != x.end(); ++i) {	cout << "X_built: " << endl;
+		if(i->first < 0) {	int i=0;
+			for(j = i; j != x.end() && abs(j->first) < abs(i->first) + alpha; ++j)		cout << "#" << i++ << endl;
 				if(j->first > 0) {
 					if(i->second->_y0 < j->second->_y0 && j->second->_y0 < i->second->_y1)
 						addEdge(i->second->_id, j->second->_id);
@@ -40,7 +40,7 @@ void connect() {
 		}
 	}
 
-	for(map<int, Shape*>::iterator i = y.begin(), j; i != y.end(); ++i) {
+	for(map<int, Shape*>::iterator i = y.begin(), j; i != y.end(); ++i) {	cout << "Y_built: "<< endl;
 		if(i->first < 0)
 			for(j = i; j != y.end() && abs(j->first) < abs(i->first) + beta; ++j)
 				if(j->first > 0) {
