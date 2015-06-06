@@ -125,6 +125,6 @@ void initCmds(CmdMgr *mgr) {
   Cmd *printCmd = new PrintCmd("print");
   mgr->regCmd(printCmd);
   Cmd *outputCmd = new PrintCmd("output");
-  mgr->regCmd(printCmd);
+  mgr->regCmd(outputCmd);
 }
 

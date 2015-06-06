@@ -37,17 +37,18 @@ class Shape{
 		Shape(int index, int x0, int y0, int x1, int y1) : _id(index), _x0(x0), _y0(y0), _x1(x1), _y1(y1) {};
 		void addEdge(Edge *e);
 		void sortEdge();
-
+		void inverse();//new
 		bool traveled;
 		int color;
 		int _id;
 		string name;
 		vector<Edge*>edge;
-
+		vector<int> window;
 		int _x0;
 		int _y0;
 		int _x1;
 		int _y1;
+		int _group;//new
 };
 
 class Graph{
@@ -75,16 +76,32 @@ class Graph{
 
 		//output
 		void output(ostream& outfile);
-
+		vector<Window*> windows;//new
 		map<int, Shape *> shapesMap;
  		vector<Shape*> shapes;
 		vector<Edge*> edges;
+		vector<Shape*> groups;//new
 		string name;
-
+		int box_x0;
+		int box_y0;
+		int box_x1;
+		int box_y1;
 		//parameter
 		int alpha;
 		int beta;
 		int omega;
 };
 
+class Window{//new
+public:
+	void calden;//calculate density
+
+private:
+	_index;
+	_density1;
+	_density2;
+	_difference;
+	vector<Shape*> member;
+	vec
+};
 #endif

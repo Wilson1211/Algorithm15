@@ -388,6 +388,41 @@ void Graph::Color()
             Colorvisit(*it1);
             it1++;
         }
+
+        //////////////////
+
+        int x1, x2;
+        int y1, x2;
+        int i, j;
+        vector<Shape*>::iterator it = (graph_->shapes).begin();
+        while(it != (graph_->shapes).end()){
+        	if((*it)->color != 0){
+        		box_x0 = (box_x0>(*it)->x0)
+
+        	}
+
+        	it++;
+        }
+
+        while(it!=(graph_->shapes).end()){
+        	x1 = ((*it)->_x0)/omega;
+        	y1 = ((*it)->_y0)/omege;
+        	x2 = ((*it)->_x1)/omega;
+        	y2 = ((*it)->_y1)/omega;
+
+        	Window* w;
+        	for(i=x1;i<=x2;i++){
+        		for(j = y1;j<=y2;j++){
+        			w = graph_->windows[];
+
+        		}
+
+        	}
+        	w = graph_->windows[];
+        	(*it)->window
+        	it++;
+        }
+
 }
 
 
@@ -473,11 +508,9 @@ void Graph::connect() {
 		}
 	}
 }
-<<<<<<< HEAD
-=======
 
 void Graph::output(ostream& outfile)
 {
 	outfile <<  "" <<endl;
 }
->>>>>>> eac948b0d8dadf6c39dc6b22f3d6122ad13927d1
+
