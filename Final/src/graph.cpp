@@ -127,6 +127,7 @@ void Graph::addEdge(const int& v1, const int& v2)
 
 void Graph::addEdge(const int& v1, const int& v2)
 {
+	cout << "(" << v1 << ", " << v2 <<")\n";
 	Shape *a, *b;
 	map<int, Shape*>::iterator it = shapesMap.find(v1);
 	if(it != shapesMap.end() /*&& (it != NULL)*/) {a = (*it).second;}
@@ -376,7 +377,7 @@ void Graph::printShapes()
 	{
 		Shape *shape = (*it).second;
 		cout << "#shape<"<< shape->_id << ">" << endl;
-		cout << shape->_x0 << ", " << shape->_y0 << ", " <<shape->_x1 << ", " << shape->_y1 << endl;
+		cout << shape->_x0 << ", " << shape->_y0 << ", " << shape->_x1 << ", " << shape->_y1 << endl;
 		cout << "	edges: " << endl;
 		for(int i=0; i<shape->edge.size();i++) {
 			cout << "	-shape" << shape->edge[i]->getNeighbor(shape)->_id << endl;
@@ -404,15 +405,20 @@ struct cmpAbsInt {
     }
 };
 void Graph::connect() {
-	map<int, Shape*, cmpAbsInt> x, y;
+	multimap<int, Shape*, cmpAbsInt> x, y;
 	for(int i = 0; i < shapes.size(); ++i) {
+		x.insert( pair<int, Shape*>( shapes[i]->_x0, shapes[i]) );
+		x.insert( pair<int, Shape*>(-shapes[i]->_x1, shapes[i]) );
+		y.insert( pair<int, Shape*>( shapes[i]->_y0, shapes[i]) );
+		y.insert( pair<int, Shape*>(-shapes[i]->_y1, shapes[i]) );
+		/*
 		x[ shapes[i]->_x0 ] = shapes[i];
 		x[-shapes[i]->_x1 ] = shapes[i];
 		y[ shapes[i]->_y0 ] = shapes[i];//Suppose that upper-right point is negative
-		y[-shapes[i]->_y1 ] = shapes[i];
+		y[-shapes[i]->_y1 ] = shapes[i];*/
 	}
 
-	for(map<int, Shape*>::iterator i = x.begin(), j; i != x.end(); ++i) {
+	for(multimap<int, Shape*>::iterator i = x.begin(), j; i != x.end(); ++i) {
 		if(i->first < 0) {
 			for(j = i; j != x.end() && abs(j->first) < abs(i->first) + alpha; ++j)
 				if(j->first > 0) {
@@ -427,9 +433,8 @@ void Graph::connect() {
 				}
 		}
 	}
-
-	for(map<int, Shape*>::iterator i = y.begin(), j; i != y.end(); ++i) {
-		if(i->first < 0)
+	for(multimap<int, Shape*>::iterator i = y.begin(), j; i != y.end(); ++i) {
+		if(i->first < 0) {
 			for(j = i; j != y.end() && abs(j->first) < abs(i->first) + beta; ++j)
 				if(j->first > 0) {
 					if(i->second->_x0 < j->second->_x0 && j->second->_x0 < i->second->_x1)
@@ -441,5 +446,6 @@ void Graph::connect() {
 					else if(j->second->_x0 < i->second->_x1 && i->second->_x1 < j->second->_x1)
 						addEdge(i->second->_id, j->second->_id);
 				}
+		}
 	}
 }
