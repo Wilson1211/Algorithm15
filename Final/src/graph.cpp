@@ -397,29 +397,33 @@ void Graph::Color()
         vector<Shape*>::iterator it = (graph_->shapes).begin();
         while(it != (graph_->shapes).end()){
         	if((*it)->color != 0){
-        		box_x0 = (box_x0>(*it)->x0)
-
+        		box_x0 = (box_x0>(*it)->x0)? (*it)->x0: box_x0;
+        		box_x1 = (box_x1<(*it)->x1)? (*it)->x1: box_x1;
+        		box_y0 = (box_y0>(*it)->y0)? (*it)->y0: box_y0;
+        		box_y1 = (box_y1<(*it)->y1)? (*it)->y1: box_y1;
         	}
 
         	it++;
         }
-
+        i = (box_x1 - box_x0)/omega + 1;//how many windows in x in the box
+        j = (box_y1 - box_y0)/omega + 1;//how many windows in y in the box
+        it = (graph_->shapes).begin();
+        int box_index1 ,box_index2;
+        Window* w;
         while(it!=(graph_->shapes).end()){
-        	x1 = ((*it)->_x0)/omega;
-        	y1 = ((*it)->_y0)/omege;
-        	x2 = ((*it)->_x1)/omega;
-        	y2 = ((*it)->_y1)/omega;
+        	
+        	x1 = ((*it)->_x0) - box_x0)/omega;
+        	y1 = ((*it)->_y0) - box_y0)/omege;
+			box_index1 = x1 + y1 * i;
+        	x2 = ((*it)->_x1) - box_x0)/omega;
+        	y2 = ((*it)->_y1) - box_y0)/omega;
+			box_index2 = x2 + y2*i;
 
-        	Window* w;
-        	for(i=x1;i<=x2;i++){
-        		for(j = y1;j<=y2;j++){
-        			w = graph_->windows[];
+			for(i=box_index1;i<=box_index2;i++){
+				w = graph_->windows[i];
+				(*it)->window.push_back(w);
 
-        		}
-
-        	}
-        	w = graph_->windows[];
-        	(*it)->window
+			}
         	it++;
         }
 
@@ -510,12 +514,6 @@ void Graph::connect() {
 }
 
 void Graph::output(ostream& outfile)
-<<<<<<< HEAD
-{
-	outfile <<  "" <<endl;
-}
-
-=======
 {/*
 	//output windows
 	for(int i=0; i< windows.size(); i++) {
@@ -536,4 +534,4 @@ void Graph::output(ostream& outfile)
 		otuptu << 
 	}*/
 }
->>>>>>> cadc538e45c7443972bb1489853a1736ad3dd2a1
+

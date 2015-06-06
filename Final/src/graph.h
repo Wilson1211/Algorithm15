@@ -43,7 +43,7 @@ class Shape{
 		int _id;
 		string name;
 		vector<Edge*>edge;
-		vector<int> window;
+		vector<Window*> window;
 		int _x0;
 		int _y0;
 		int _x1;
