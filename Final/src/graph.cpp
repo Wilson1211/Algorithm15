@@ -449,3 +449,8 @@ void Graph::connect() {
 		}
 	}
 }
+
+void Graph::output(ostream& outfile)
+{
+	outfile <<  "" <<endl;
+}

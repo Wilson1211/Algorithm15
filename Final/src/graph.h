@@ -73,6 +73,9 @@ class Graph{
 		void printShapes() ;
 		void printColor() {};
 
+		//output
+		void output(ostream& outfile);
+
 		map<int, Shape *> shapesMap;
  		vector<Shape*> shapes;
 		vector<Edge*> edges;
