@@ -411,7 +411,7 @@ void Graph::Color()
         int box_index1 ,box_index2;
         Window* w;
         while(it!=(graph_->shapes).end()){
-        	
+
         	x1 = ((*it)->_x0) - box_x0)/omega;
         	y1 = ((*it)->_y0) - box_y0)/omege;
 			box_index1 = x1 + y1 * i;
@@ -422,6 +422,7 @@ void Graph::Color()
 			for(i=box_index1;i<=box_index2;i++){
 				w = graph_->windows[i];
 				(*it)->window.push_back(w);
+				(w->member).push_back(*it);
 
 			}
         	it++;
