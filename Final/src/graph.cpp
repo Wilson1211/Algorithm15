@@ -451,6 +451,23 @@ void Graph::connect() {
 }
 
 void Graph::output(ostream& outfile)
-{
-	outfile <<  "" <<endl;
+{/*
+	//output windows
+	for(int i=0; i< windows.size(); i++) {
+		outfile << "WIN[" << i << "]=" << windows[i]->_x0 << "," << windows[i] << ->_y0 << "," 
+					       << windows[i]->_x1 << "," << windows[i] << ->_y1 
+					       << "(" << windows[i]->density0 << " " << windows[i]->density1 << ")" << endl;
+	}
+
+	//output group
+	for(int i=0; i<groups.size(); i++) {
+		vector<Shape*> color1;
+		vector<Shape*> color2;
+		vector<Shape*> color0; // NO COLOR
+
+		for()
+
+		output << "GROUP" << endl;
+		otuptu << 
+	}*/
 }
