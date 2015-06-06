@@ -202,14 +202,15 @@ Shape * Graph::getShapeById(const int& id)
 #include <stdio.h>
 bool Graph::readFile( char* filename) {
 	/////C style //////
-	/*FILE *fin = fopen(filename, "r");
+	FILE *fin = fopen(filename, "r");
 	if(fin != NULL) {
 		int a,b,c,d,index=0;
 		Shape* s;
-		fscanf(fin,"ALPHA=%d\n", &alpha);
-		fscanf(fin,"BETA=%d\n" , &beta);
-		fscanf(fin,"OMEGA=%d\n", &omega);
-		while(fscanf(fin,"%d,%d,%d,%d\n", &a, &b, &c, &d) != EOF) {
+		fscanf("ALPHA=%d", &alpha);
+		fscanf("BETA=%d" , &beta);
+		fscanf("OMRGA=%d", &omega);
+		while(fin != EOF) {
+			fscanf("%d%d%d%d", &a, &b, &c, &d);
 			s = new Shape(++index, a, b, c, d);
 			shapes.push_back(s);
 			shapesMap[index] = s;
@@ -217,9 +218,9 @@ bool Graph::readFile( char* filename) {
 		fclose(fin);
 		return true;
 	}
-	else	return false;*/
+	else	return false;
 	//////C++ style///////
- 	fstream fin(filename);
+ /*	fstream fin(filename);
 
 	if(fin.is_open()) {
 		char c; //get single char
@@ -274,7 +275,7 @@ bool Graph::readFile( char* filename) {
 	}
 	else {
 		return false;
-	}
+	}*/
 	return true;
 }
 
@@ -323,7 +324,7 @@ void Graph::BFS(Shape* v, ostream& outfile, int& counter, queue<Shape*>& list)
 		BFS(next, outfile, counter, list);
 	}
 }
-int encolor(Shape* u){
+void encolor(Shape* u){
         vector<Edge* >::iterator it;
         Shape* node;
         int flag = 1;
@@ -339,11 +340,8 @@ int encolor(Shape* u){
             }
         }
         u->color = flag;
-        if(flag >2){u->color = 0;return 0;}
-        else{return 1;}
-}
-int i=1;
-void Colorvisit(Shape* u){
+    }
+    void Colorvisit(Shape* u){
         vector<Edge*>::iterator it;
         it = (u->edge).begin();
         Shape* node;
@@ -351,12 +349,10 @@ void Colorvisit(Shape* u){
             node = (*it)->getNeighbor(u);
             if(node->edge.size() == u->edge.size()){
                 if(node->color == 0){
-                    i = encolor(node);
-                    if(i == 0){u->color = 0;break;}
+                    encolor(node);
                     Colorvisit(node);
                 }
             }
-            if(i == 0){u->color = 0;break;}
             it++;
         }
         return;
@@ -401,7 +397,7 @@ void Graph::printShapes()
 		cout << shape->_x0 << ", " << shape->_y0 << ", " << shape->_x1 << ", " << shape->_y1 << endl;
 		cout << "	edges: " << endl;
 		for(int i=0; i<shape->edge.size();i++) {
-			cout << "	-shape" << shape->edge[i]->getNeighbor(shape)->_id << endl;
+			cout << "	-shape<" << shape->edge[i]->getNeighbor(shape)->_id << endl;
 		}
 		cout<< "	color"<<shape->color <<endl;
 	}
