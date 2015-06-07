@@ -199,8 +199,26 @@ Shape * Graph::getShapeById(const int& id)
 	return shapesMap[id];
 }
 
-
+#include <stdio.h>
 bool Graph::readFile( char* filename) {
+	/////C style //////
+	/*FILE *fin = fopen(filename, "r");
+	if(fin != NULL) {
+		int a,b,c,d,index=0;
+		Shape* s;
+		fscanf(fin,"ALPHA=%d\n", &alpha);
+		fscanf(fin,"BETA=%d\n" , &beta);
+		fscanf(fin,"OMEGA=%d\n", &omega);
+		while(fscanf(fin,"%d,%d,%d,%d\n", &a, &b, &c, &d) != EOF) {
+			s = new Shape(++index, a, b, c, d);
+			shapes.push_back(s);
+			shapesMap[index] = s;
+		}
+		fclose(fin);
+		return true;
+	}
+	else	return false;*/
+	//////C++ style///////
  	fstream fin(filename);
 
 	if(fin.is_open()) {
@@ -305,7 +323,7 @@ void Graph::BFS(Shape* v, ostream& outfile, int& counter, queue<Shape*>& list)
 		BFS(next, outfile, counter, list);
 	}
 }
-void encolor(Shape* u){
+int encolor(Shape* u){
         vector<Edge* >::iterator it;
         Shape* node;
         int flag = 1;
@@ -321,8 +339,11 @@ void encolor(Shape* u){
             }
         }
         u->color = flag;
-    }
-    void Colorvisit(Shape* u){
+        if(flag >2){u->color = 0;return 0;}
+        else{return 1;}
+}
+int i=1;
+void Colorvisit(Shape* u){
         vector<Edge*>::iterator it;
         it = (u->edge).begin();
         Shape* node;
@@ -330,10 +351,12 @@ void encolor(Shape* u){
             node = (*it)->getNeighbor(u);
             if(node->edge.size() == u->edge.size()){
                 if(node->color == 0){
-                    encolor(node);
+                    i = encolor(node);
+                    if(i == 0){u->color = 0;break;}
                     Colorvisit(node);
                 }
             }
+            if(i == 0){u->color = 0;break;}
             it++;
         }
         return;
@@ -365,6 +388,46 @@ void Graph::Color()
             Colorvisit(*it1);
             it1++;
         }
+
+        //////////////////
+
+        int x1, x2;
+        int y1, x2;
+        int i, j;
+        vector<Shape*>::iterator it = (graph_->shapes).begin();
+        while(it != (graph_->shapes).end()){
+        	if((*it)->color != 0){
+        		box_x0 = (box_x0>(*it)->x0)? (*it)->x0: box_x0;
+        		box_x1 = (box_x1<(*it)->x1)? (*it)->x1: box_x1;
+        		box_y0 = (box_y0>(*it)->y0)? (*it)->y0: box_y0;
+        		box_y1 = (box_y1<(*it)->y1)? (*it)->y1: box_y1;
+        	}
+
+        	it++;
+        }
+        i = (box_x1 - box_x0)/omega + 1;//how many windows in x in the box
+        j = (box_y1 - box_y0)/omega + 1;//how many windows in y in the box
+        it = (graph_->shapes).begin();
+        int box_index1 ,box_index2;
+        Window* w;
+        while(it!=(graph_->shapes).end()){
+
+        	x1 = ((*it)->_x0) - box_x0)/omega;
+        	y1 = ((*it)->_y0) - box_y0)/omege;
+			box_index1 = x1 + y1 * i;
+        	x2 = ((*it)->_x1) - box_x0)/omega;
+        	y2 = ((*it)->_y1) - box_y0)/omega;
+			box_index2 = x2 + y2*i;
+
+			for(i=box_index1;i<=box_index2;i++){
+				w = graph_->windows[i];
+				(*it)->window.push_back(w);
+				(w->member).push_back(*it);
+
+			}
+        	it++;
+        }
+
 }
 
 
@@ -411,41 +474,42 @@ void Graph::connect() {
 		x.insert( pair<int, Shape*>(-shapes[i]->_x1, shapes[i]) );
 		y.insert( pair<int, Shape*>( shapes[i]->_y0, shapes[i]) );
 		y.insert( pair<int, Shape*>(-shapes[i]->_y1, shapes[i]) );
-		/*
-		x[ shapes[i]->_x0 ] = shapes[i];
-		x[-shapes[i]->_x1 ] = shapes[i];
-		y[ shapes[i]->_y0 ] = shapes[i];//Suppose that upper-right point is negative
-		y[-shapes[i]->_y1 ] = shapes[i];*/
 	}
-
-	for(multimap<int, Shape*>::iterator i = x.begin(), j; i != x.end(); ++i) {
+	multimap<int, Shape*>::iterator i, j;
+	for(i = x.begin(); i != x.end(); ++i) {
 		if(i->first < 0) {
-			for(j = i; j != x.end() && abs(j->first) < abs(i->first) + alpha; ++j)
-				if(j->first > 0) {
-					if(i->second->_y0 < j->second->_y0 && j->second->_y0 < i->second->_y1)
-						addEdge(i->second->_id, j->second->_id);
-					else if(i->second->_y0 < j->second->_y1 && j->second->_y1 < i->second->_y1)
+			for(j = i; j != x.end() && j->first > 0 && j->first < alpha - i->first; ++j)
+				//if(j->first > 0) {
+				if( (i->second->_y0 < j->second->_y0 && j->second->_y0 < i->second->_y1)
+				  ||(i->second->_y0 < j->second->_y1 && j->second->_y1 < i->second->_y1)
+				  ||(j->second->_y0 < i->second->_y0 && i->second->_y0 < j->second->_y1)
+				  ||(j->second->_y0 < i->second->_y1 && i->second->_y1 < j->second->_y1) )
+					addEdge(i->second->_id, j->second->_id);
+					/*else if(i->second->_y0 < j->second->_y1 && j->second->_y1 < i->second->_y1)
 						addEdge(i->second->_id, j->second->_id);
 					else if(j->second->_y0 < i->second->_y0 && i->second->_y0 < j->second->_y1)
 						addEdge(i->second->_id, j->second->_id);
 					else if(j->second->_y0 < i->second->_y1 && i->second->_y1 < j->second->_y1)
 						addEdge(i->second->_id, j->second->_id);
-				}
+				}*/
 		}
 	}
-	for(multimap<int, Shape*>::iterator i = y.begin(), j; i != y.end(); ++i) {
+	for(i = y.begin(); i != y.end(); ++i) {
 		if(i->first < 0) {
-			for(j = i; j != y.end() && abs(j->first) < abs(i->first) + beta; ++j)
-				if(j->first > 0) {
-					if(i->second->_x0 < j->second->_x0 && j->second->_x0 < i->second->_x1)
-						addEdge(i->second->_id, j->second->_id);
-					else if(i->second->_x0 < j->second->_x1 && j->second->_x1 < i->second->_x1)
+			for(j = i; j != y.end() && j->first > 0 && j->first < beta - i->first; ++j)
+				//if(j->first > 0) {
+				if( (i->second->_x0 < j->second->_x0 && j->second->_x0 < i->second->_x1)
+				  ||(i->second->_x0 < j->second->_x1 && j->second->_x1 < i->second->_x1)
+				  ||(j->second->_x0 < i->second->_x0 && i->second->_x0 < j->second->_x1)
+				  ||(j->second->_x0 < i->second->_x1 && i->second->_x1 < j->second->_x1) )
+					addEdge(i->second->_id, j->second->_id);
+					/*else if(i->second->_x0 < j->second->_x1 && j->second->_x1 < i->second->_x1)
 						addEdge(i->second->_id, j->second->_id);
 					else if(j->second->_x0 < i->second->_x0 && i->second->_x0 < j->second->_x1)
 						addEdge(i->second->_id, j->second->_id);
 					else if(j->second->_x0 < i->second->_x1 && i->second->_x1 < j->second->_x1)
 						addEdge(i->second->_id, j->second->_id);
-				}
+				}*/
 		}
 	}
 }
@@ -486,6 +550,7 @@ void Graph::output(ostream& outfile)
 			}
 		}
 		output << "GROUP" << endl;
+<<<<<<< HEAD
 		//NO color
 		for(int no=1; no <=color0.size();no++) {
 			outfile << "NO[" << no << "]=" << color0[no-1]->_x0<<"," << color0[no-1]->_y0 << "," 
@@ -516,3 +581,9 @@ void Graph::output(ostream& outfile)
 	////////////////////////////////
 */
 }
+=======
+		otuptu << 
+	}*/
+}
+
+>>>>>>> 8a4fe12939632778920f5845a1c448e8506612a1
