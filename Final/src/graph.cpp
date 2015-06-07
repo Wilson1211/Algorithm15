@@ -459,15 +459,60 @@ void Graph::output(ostream& outfile)
 					       << "(" << windows[i]->density0 << " " << windows[i]->density1 << ")" << endl;
 	}
 
+
+	vector<Shape*> color1;
+	vector<Shape*> color2;
+	vector<Shape*> color0; // NO COLOR
 	//output group
 	for(int i=0; i<groups.size(); i++) {
-		vector<Shape*> color1;
-		vector<Shape*> color2;
-		vector<Shape*> color0; // NO COLOR
 
-		for()
-
+		//////////////////////////////////////// what is the structure of "groups" ??????????????????????????
+		//
+		//vecotr<Group*> groups ????
+		//class Group {
+		//	private: vector<Shape*> member
+		//}
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		Shape* shape = groups[i]->member[j];
+		for(int j=0;groups[i]->size();j++) {
+			if(shape->color == 1) {
+				color1.push_back(shape);
+			}
+			else if (shape->color == 2) {
+				color2.push_back(shape);
+			}
+			else {
+				color0.push_back(shape);
+			}
+		}
 		output << "GROUP" << endl;
-		otuptu << 
-	}*/
+		//NO color
+		for(int no=1; no <=color0.size();no++) {
+			outfile << "NO[" << no << "]=" << color0[no-1]->_x0<<"," << color0[no-1]->_y0 << "," 
+						         << color0[no-1]->_x1 << "," << color0[no-1]->_x1 << endl;
+		}
+		for(int i=1; i <=color1.size();i++) {
+			outfile << "CA[" << i << "]=" << color1[i-1]->_x0<<"," << color1[i-1]->_y0 << "," 
+						    << color1[i-1]->_x1 << "," << color1[i-1]->_x1 << endl;
+		}
+		for(int i=1; i <=color2.size();i++) {
+			outfile << "CB[" << i << "]=" << color2[i-1]->_x0<<"," << color2[i-1]->_y0 << "," 
+						    << color2[i-1]->_x1 << "," << color2[i-1]->_x1 << endl;
+		}
+	}
+	///////////////////////////////
+	//GROUP
+            	//NO[1]=0,200,185,260
+            	//NO[2]=180,50,400,150
+            	//NO[3]=100,330,280,400
+            	//NO[4]=320,290,480,340
+            	//NO[5]=310,395,460,450
+	//
+            	//GROUP
+            	//CA[1]=720,120,940,220
+            	//CA[2]=640,400,820,470
+            	//CB[1]=540,270,725,330
+            	//CB[2]=860,360,1020,410
+	////////////////////////////////
+*/
 }
