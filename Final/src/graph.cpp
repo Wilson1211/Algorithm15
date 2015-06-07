@@ -528,19 +528,70 @@ void Graph::output(ostream& outfile)
 					       << "(" << windows[i]->density0 << " " << windows[i]->density1 << ")" << endl;
 	}
 
+
+	vector<Shape*> color1;
+	vector<Shape*> color2;
+	vector<Shape*> color0; // NO COLOR
 	//output group
 	for(int i=0; i<groups.size(); i++) {
-		vector<Shape*> color1;
-		vector<Shape*> color2;
-		vector<Shape*> color0; // NO COLOR
 
-		for()
-
+		//////////////////////////////////////// what is the structure of "groups" ??????????????????????????
+		//
+		//vecotr<Group*> groups ????
+		//class Group {
+		//	private: vector<Shape*> member
+		//}
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		Shape* shape = groups[i]->member[j];
+		for(int j=0;groups[i]->size();j++) {
+			if(shape->color == 1) {
+				color1.push_back(shape);
+			}
+			else if (shape->color == 2) {
+				color2.push_back(shape);
+			}
+			else {
+				color0.push_back(shape);
+			}
+		}
 		output << "GROUP" << endl;
+<<<<<<< HEAD
+		//NO color
+		for(int no=1; no <=color0.size();no++) {
+			outfile << "NO[" << no << "]=" << color0[no-1]->_x0<<"," << color0[no-1]->_y0 << "," 
+						         << color0[no-1]->_x1 << "," << color0[no-1]->_x1 << endl;
+		}
+		for(int i=1; i <=color1.size();i++) {
+			outfile << "CA[" << i << "]=" << color1[i-1]->_x0<<"," << color1[i-1]->_y0 << "," 
+						    << color1[i-1]->_x1 << "," << color1[i-1]->_x1 << endl;
+		}
+		for(int i=1; i <=color2.size();i++) {
+			outfile << "CB[" << i << "]=" << color2[i-1]->_x0<<"," << color2[i-1]->_y0 << "," 
+						    << color2[i-1]->_x1 << "," << color2[i-1]->_x1 << endl;
+		}
+	}
+	///////////////////////////////
+	//GROUP
+            	//NO[1]=0,200,185,260
+            	//NO[2]=180,50,400,150
+            	//NO[3]=100,330,280,400
+            	//NO[4]=320,290,480,340
+            	//NO[5]=310,395,460,450
+	//
+            	//GROUP
+            	//CA[1]=720,120,940,220
+            	//CA[2]=640,400,820,470
+            	//CB[1]=540,270,725,330
+            	//CB[2]=860,360,1020,410
+	////////////////////////////////
+*/
+}
+=======
 		otuptu << 
 	}*/
 }
 
+<<<<<<< HEAD
 int area(Shape* a){
 	int x1, x0, y1, y0;//indicates window coordinates
 	int i = (box_x1 - box_x0)/omega + 1;//how many windows in x in the box
@@ -585,3 +636,6 @@ void Window::calden(){
 
 	return _difference;	
 }
+=======
+>>>>>>> 8a4fe12939632778920f5845a1c448e8506612a1
+>>>>>>> 6be6ab2e5ad38d7e003d240748d99c6c159cda2d
