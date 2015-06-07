@@ -414,17 +414,36 @@ void Graph::Color()
 
         	x1 = ((*it)->_x0) - box_x0)/omega;
         	y1 = ((*it)->_y0) - box_y0)/omege;
-			box_index1 = x1 + y1 * i;
+			//box_index1 = x1 + y1 * i;
         	x2 = ((*it)->_x1) - box_x0)/omega;
         	y2 = ((*it)->_y1) - box_y0)/omega;
-			box_index2 = x2 + y2*i;
+			//box_index2 = x2 + y2*i;
 
-			for(i=box_index1;i<=box_index2;i++){
-				w = graph_->windows[i];
-				(*it)->window.push_back(w);
-				(w->member).push_back(*it);
+			for(int a = x1; a <= x2; ++a)
+				for(int b = y1; b <= y2; ++b){
+					w = graph_->window[a + b*i];
+					(*it)->window.push_back(w);
+					(w->member).push_back(*it);
+				}
 
-			}
+			//rightmost up-most
+			x1 = (box_x1 - (*it)->_x0)/omega;
+			y1 = (box_y1 - (*it)->_y0)/omega;
+			x2 = (box_x1 - (*it)->_x1)/omega;
+			y2 = (box_y1 - (*it)->_y1)/omega;
+				if(y2==0)
+					for(int a = x1; a <= x2; ++a) {
+						w = graph_->window[ i*j-1 - a];
+						(*it)->window.push_back(w);
+						(w->member).push_back(*it);
+					}
+				if(x2==0)
+					for(int b = y1; b <= y2; ++b) {
+						w = graph_->window[ i*j-1 - b*i];
+						(*it)->window.push_back(w);
+						(w->member).push_back(*it);
+					}
+			
         	it++;
         }
 
@@ -477,40 +496,26 @@ void Graph::connect() {
 	}
 	multimap<int, Shape*>::iterator i, j;
 	for(i = x.begin(); i != x.end(); ++i) {
-		if(i->first < 0) {
-			for(j = i; j != x.end() && j->first > 0 && j->first < alpha - i->first; ++j)
-				//if(j->first > 0) {
-				if( (i->second->_y0 < j->second->_y0 && j->second->_y0 < i->second->_y1)
-				  ||(i->second->_y0 < j->second->_y1 && j->second->_y1 < i->second->_y1)
-				  ||(j->second->_y0 < i->second->_y0 && i->second->_y0 < j->second->_y1)
-				  ||(j->second->_y0 < i->second->_y1 && i->second->_y1 < j->second->_y1) )
-					addEdge(i->second->_id, j->second->_id);
-					/*else if(i->second->_y0 < j->second->_y1 && j->second->_y1 < i->second->_y1)
+		if(i->first < 0)
+			for(j = i; j != x.end() && abs(j->first) < alpha - i->first; ++j)
+				if(j->first > 0) {
+					if( (i->second->_y0 < j->second->_y0 && j->second->_y0 < i->second->_y1)
+					  ||(i->second->_y0 < j->second->_y1 && j->second->_y1 < i->second->_y1)
+					  ||(j->second->_y0 < i->second->_y0 && i->second->_y0 < j->second->_y1)
+					  ||(j->second->_y0 < i->second->_y1 && i->second->_y1 < j->second->_y1) )
 						addEdge(i->second->_id, j->second->_id);
-					else if(j->second->_y0 < i->second->_y0 && i->second->_y0 < j->second->_y1)
-						addEdge(i->second->_id, j->second->_id);
-					else if(j->second->_y0 < i->second->_y1 && i->second->_y1 < j->second->_y1)
-						addEdge(i->second->_id, j->second->_id);
-				}*/
-		}
+				}
 	}
 	for(i = y.begin(); i != y.end(); ++i) {
-		if(i->first < 0) {
-			for(j = i; j != y.end() && j->first > 0 && j->first < beta - i->first; ++j)
-				//if(j->first > 0) {
-				if( (i->second->_x0 < j->second->_x0 && j->second->_x0 < i->second->_x1)
-				  ||(i->second->_x0 < j->second->_x1 && j->second->_x1 < i->second->_x1)
-				  ||(j->second->_x0 < i->second->_x0 && i->second->_x0 < j->second->_x1)
-				  ||(j->second->_x0 < i->second->_x1 && i->second->_x1 < j->second->_x1) )
-					addEdge(i->second->_id, j->second->_id);
-					/*else if(i->second->_x0 < j->second->_x1 && j->second->_x1 < i->second->_x1)
+		if(i->first < 0)
+			for(j = i; j != y.end() && abs(j->first) < beta - i->first; ++j)
+				if(j->first > 0) {
+					if( (i->second->_x0 < j->second->_x0 && j->second->_x0 < i->second->_x1)
+					  ||(i->second->_x0 < j->second->_x1 && j->second->_x1 < i->second->_x1)
+					  ||(j->second->_x0 < i->second->_x0 && i->second->_x0 < j->second->_x1)
+					  ||(j->second->_x0 < i->second->_x1 && i->second->_x1 < j->second->_x1) )
 						addEdge(i->second->_id, j->second->_id);
-					else if(j->second->_x0 < i->second->_x0 && i->second->_x0 < j->second->_x1)
-						addEdge(i->second->_id, j->second->_id);
-					else if(j->second->_x0 < i->second->_x1 && i->second->_x1 < j->second->_x1)
-						addEdge(i->second->_id, j->second->_id);
-				}*/
-		}
+				}
 	}
 }
 
@@ -536,3 +541,47 @@ void Graph::output(ostream& outfile)
 	}*/
 }
 
+int area(Shape* a){
+	int x1, x0, y1, y0;//indicates window coordinates
+	int i = (box_x1 - box_x0)/omega + 1;//how many windows in x in the box
+    int j = (box_y1 - box_y0)/omega + 1;//how many windows in y in the box
+    if(_index % i == i - 1){
+    	x1 = box_x1;
+    	x0 = x1 - omega;
+    }else{
+		x0 =  (_index % i) * omega + box_x0;
+		x1 = x0 + omega;
+	}
+
+	if(_index / i == j - 1){
+		y1 = box_y1;
+		y0 = y1 - omega;
+	}else{
+		y0 = _index / i + box_y0;
+		y1 = y0 + omega;
+	}
+
+	if(a->)
+
+	return 
+}
+
+void Window::calden(){
+	//vector<Shape*> member;
+	vector<Shape*>::iterator it = member.begin();
+	
+	int omega = graph_->omega;
+	int color1=0, color2=0;
+	while(it!= member.end()){
+		if((*it)->color == 1){
+			color1 += area(*it);
+		}else if((*it)->color == 2){
+			color2 += area(*it);
+		}
+
+		it++;
+	}
+
+
+	return _difference;	
+}

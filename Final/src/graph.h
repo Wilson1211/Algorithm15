@@ -94,14 +94,14 @@ class Graph{
 
 class Window{//new
 public:
-	void calden;//calculate density
+	int calden();//calculate density
 
-private:
-	_index;
-	_density1;
-	_density2;
-	_difference;
-	vector<Shape*> member;
+	int _index1;
+	int _index2;
+	int _density1;
+	int _density2;
+	int _difference;
+	int vector<Shape*> member;
 	vec
 };
 #endif
