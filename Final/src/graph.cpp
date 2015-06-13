@@ -220,7 +220,7 @@ bool Graph::readFile( char* filename) {
 	else	return false;*/
 	//////C++ style///////
  	fstream fin(filename);
-
+cout<<"!!!";
 	if(fin.is_open()) {
 		char c; //get single char
 		char buf[1024]; //getline
@@ -392,36 +392,52 @@ void Graph::Color()
         //////////////////
 
         int x1, x2;
-        int y1, x2;
+        int y1, y2;
         int i, j;
         vector<Shape*>::iterator it = (graph_->shapes).begin();
         while(it != (graph_->shapes).end()){
         	if((*it)->color != 0){
-        		box_x0 = (box_x0>(*it)->x0)? (*it)->x0: box_x0;
-        		box_x1 = (box_x1<(*it)->x1)? (*it)->x1: box_x1;
-        		box_y0 = (box_y0>(*it)->y0)? (*it)->y0: box_y0;
-        		box_y1 = (box_y1<(*it)->y1)? (*it)->y1: box_y1;
+        		box_x0 = (box_x0>(*it)->_x0)? (*it)->_x0: box_x0;
+        		box_x1 = (box_x1<(*it)->_x1)? (*it)->_x1: box_x1;
+        		box_y0 = (box_y0>(*it)->_y0)? (*it)->_y0: box_y0;
+        		box_y1 = (box_y1<(*it)->_y1)? (*it)->_y1: box_y1;
         	}
 
         	it++;
         }
-        i = (box_x1 - box_x0)/omega + 1;//how many windows in x in the box
-        j = (box_y1 - box_y0)/omega + 1;//how many windows in y in the box
+        i = (box_x1 - box_x0)/omega;//how many windows in x in the box
+        if( (box_x1 - box_x0) % omega != 0){i++;}
+        j = (box_y1 - box_y0)/omega;//how many windows in y in the box
+        if((box_y1 - box_y0) % omega != 0){j++;}
+
         it = (graph_->shapes).begin();
         int box_index1 ,box_index2;
+
+        int k, l;
+        for(k=0;k<i;k++){
+        	for(l=0;l<j;l++){
+        		Window* w = new Window;
+        		w->_index2 = l;
+        		w->_index1 = k;
+        		w->_index = i+j;
+        		(graph_->windows).push_back(w);
+        	}
+        }
+
         Window* w;
         while(it!=(graph_->shapes).end()){
 
-        	x1 = ((*it)->_x0) - box_x0)/omega;
-        	y1 = ((*it)->_y0) - box_y0)/omege;
+        	x1 = ((*it)->_x0 - box_x0)/omega;//
+        	y1 = ((*it)->_y0 - box_y0)/omega;//
 			//box_index1 = x1 + y1 * i;
-        	x2 = ((*it)->_x1) - box_x0)/omega;
-        	y2 = ((*it)->_y1) - box_y0)/omega;
+        	x2 = ((*it)->_x1 - box_x0)/omega;//
+        	y2 = ((*it)->_y1 - box_y0)/omega;//
 			//box_index2 = x2 + y2*i;
 
 			for(int a = x1; a <= x2; ++a)
 				for(int b = y1; b <= y2; ++b){
-					w = graph_->window[a + b*i];
+					
+					w = graph_->windows[a + b*i];
 					(*it)->window.push_back(w);
 					(w->member).push_back(*it);
 				}
@@ -433,13 +449,13 @@ void Graph::Color()
 			y2 = (box_y1 - (*it)->_y1)/omega;
 				if(y2==0)
 					for(int a = x1; a <= x2; ++a) {
-						w = graph_->window[ i*j-1 - a];
+						w = graph_->windows[ i*j-1 - a];
 						(*it)->window.push_back(w);
 						(w->member).push_back(*it);
 					}
 				if(x2==0)
 					for(int b = y1; b <= y2; ++b) {
-						w = graph_->window[ i*j-1 - b*i];
+						w = graph_->windows[ i*j-1 - b*i];
 						(*it)->window.push_back(w);
 						(w->member).push_back(*it);
 					}
@@ -489,7 +505,7 @@ struct cmpAbsInt {
 void Graph::connect() {
 	multimap<int, Shape*, cmpAbsInt> x, y;
 	for(int i = 0; i < shapes.size(); ++i) {
-		x.insert( pair<int, Shape*>( shapes[i]->_x0, shapes[i]) );
+		x.insert( pair<int, Shape*>( shapes[i]->_x0, shapes[i]) ); 
 		x.insert( pair<int, Shape*>(-shapes[i]->_x1, shapes[i]) );
 		y.insert( pair<int, Shape*>( shapes[i]->_y0, shapes[i]) );
 		y.insert( pair<int, Shape*>(-shapes[i]->_y1, shapes[i]) );
@@ -586,38 +602,38 @@ void Graph::output(ostream& outfile)
 	////////////////////////////////
 */
 }
-=======
-		otuptu << 
-	}*/
-}
 
-<<<<<<< HEAD
-int area(Shape* a){
+int Window::area(Shape* a){
 	int x1, x0, y1, y0;//indicates window coordinates
-	int i = (box_x1 - box_x0)/omega + 1;//how many windows in x in the box
-    int j = (box_y1 - box_y0)/omega + 1;//how many windows in y in the box
-    if(_index % i == i - 1){
-    	x1 = box_x1;
+	int omega = graph_->omega;
+	int i = (graph_->box_x1 - graph_->box_x0)/omega + 1;//how many windows in x in the box
+    int j = (graph_->box_y1 - graph_->box_y0)/omega + 1;//how many windows in y in the box
+    if(_index2 % i == i - 1){
+    	x1 = graph_->box_x1;
     	x0 = x1 - omega;
     }else{
-		x0 =  (_index % i) * omega + box_x0;
+		x0 =  (_index2 % i) * omega + graph_->box_x0;
 		x1 = x0 + omega;
 	}
 
-	if(_index / i == j - 1){
-		y1 = box_y1;
+	if(_index1 / i == j - 1){
+		y1 = graph_->box_y1;
 		y0 = y1 - omega;
 	}else{
-		y0 = _index / i + box_y0;
+		y0 = _index1 / i + graph_->box_y0;
 		y1 = y0 + omega;
 	}
 
-	if(a->)
+	int countx1, countx2, county1, county2;
+	countx1 = (a->_x0 > x0)? a->_x0: x0;
+	countx2 = (a->_x1 < x1)? a->_x1: x1;
+	county1 = (a->_y0 > y0)? a->_y0: y0;
+	county2 = (a->_y1 < y1)? a->_y1: y1;
 
-	return 
+	return (countx2 - countx1)*(county2 - county1);
 }
 
-void Window::calden(){
+int Window::calden(){
 	//vector<Shape*> member;
 	vector<Shape*>::iterator it = member.begin();
 	
@@ -636,6 +652,4 @@ void Window::calden(){
 
 	return _difference;	
 }
-=======
->>>>>>> 8a4fe12939632778920f5845a1c448e8506612a1
->>>>>>> 6be6ab2e5ad38d7e003d240748d99c6c159cda2d
+

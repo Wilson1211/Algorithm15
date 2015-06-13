@@ -29,7 +29,19 @@ class Edge{
 		bool operator < (const Edge& rhs) const;
 
 };
-
+class Window{//new
+public:
+	int calden();//calculate density
+	int area(Shape*);
+	int _index;
+	int _index1;//y
+	int _index2;//x
+	int _density1;
+	int _density2;
+	int _difference;
+	vector<Shape*> member;
+	
+};
 class Shape{
 
 	public:
@@ -56,7 +68,7 @@ class Graph{
 	public:
 		Graph(const string& n);
 		~Graph();
-		
+		friend class Window;
 		void addEdge(const int& v1, const int& v2);
 		void sortEdgesOfShape();           
  		void sortShapesByDegree();      
@@ -92,16 +104,5 @@ class Graph{
 		int omega;
 };
 
-class Window{//new
-public:
-	int calden();//calculate density
 
-	int _index1;
-	int _index2;
-	int _density1;
-	int _density2;
-	int _difference;
-	int vector<Shape*> member;
-	vec
-};
 #endif
