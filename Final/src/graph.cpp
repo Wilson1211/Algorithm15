@@ -272,6 +272,8 @@ bool Graph::readFile( char* filename) {
 			shapesMap[index] = s;
 		}
 		//shapes[0] is dummy shape (0,0) (0,0)
+		shapes.pop_back();
+		shapesMap.erase(20);
 	}
 	else {
 		return false;
@@ -421,13 +423,25 @@ void Graph::Color()
         }
         ////////////////// calculate windows density
         
-        int x1, x2;
-        int y1, y2;
-        int i, j;
-        box_x0 = 0;box_x1 = 0;box_y0 = 0;box_y1= 0;
+        int x1, x2, x3, x4;
+        int y1, y2, y3, y4;
+        int i, j, flag1 = 0, flag2 = 0;
+        //box_x0 = 0;box_x1 = 0;box_y0 = 0;box_y1= 0;
        vector<Shape*>::iterator it = (graph_->shapes).begin();
+       
         while(it != (graph_->shapes).end()){
-        	if((*it)->color != 0){if((*it)->_id == 1){cout<<"cojsej"<<endl;}
+
+        	if((*it)->color != 0){
+        		if(flag1 == 0){
+        			box_x0 = (*it)->_x0;
+        			box_x1 = (*it)->_x1;
+        			box_y0 = (*it)->_y0;
+        			box_y1 = (*it)->_y1;
+        			flag1 = 1;
+        		}
+        		cout<<(*it)->_id<<endl;
+        		cout<<(*it)->_x0 <<endl;
+        		cout<<(*it)->_y0 <<endl;
         		box_x0 = (box_x0>(*it)->_x0)? (*it)->_x0: box_x0;
         		box_x1 = (box_x1<(*it)->_x1)? (*it)->_x1: box_x1;
         		box_y0 = (box_y0>(*it)->_y0)? (*it)->_y0: box_y0;
@@ -436,14 +450,11 @@ void Graph::Color()
     
         	it++;
         }
-        cout<<"box_x0"<<box_x0<<endl;
-        cout<<"box_x1"<<box_x1<<endl;
-        cout<<"box_y0"<<box_y0<<endl;
-        cout<<"box_y1"<<box_y1<<endl;
+    	//cout<<"boxx0 "<<box_x0<<" boxx1 "<<box_x1<<" boxy0 "<<box_y0<<" box_y1 "<<box_y1<<endl;
         i = (box_x1 - box_x0)/omega;//how many windows in x in the box
-        if( (box_x1 - box_x0) % omega != 0){i++;}
+        if( (box_x1 - box_x0) % omega != 0){flag1 = 1;i++;}
         j = (box_y1 - box_y0)/omega;//how many windows in y in the box
-        if((box_y1 - box_y0) % omega != 0){j++;}
+        if((box_y1 - box_y0) % omega != 0){flag2 = 1;j++;}
         
         
         it = (graph_->shapes).begin();
@@ -456,51 +467,119 @@ void Graph::Color()
         		w->_index2 = l;
         		w->_index1 = k;
         		w->_index = l+k;
+        		if(flag1 == 1&&(l == j-1)){
+        			w->_x1 = box_x1;
+        			w->_x0 = w->_x1 - omega;
+        		}else{
+        			w->_x0 = box_x0 + l*omega;
+        			w->_x1 = w->_x0 + omega;
+        		}
+        		if(flag2 == 1 && (k == i-1)){
+        			w->_y1 = box_y1;
+        			w->_y0 = w->_y1 - omega;
+        		}else{
+        			w->_y0 = box_y0 + k * omega;
+        			w->_y1 = w->_y0 + omega;
+        		}
+
         		(graph_->windows).push_back(w);
         		//cout<<graph_->windows.size()<<endl;
         	}
         	
         }
-        
         Window* w;
+        /*for(k=0;k<i;k++){
+        	for(l=0;l<j;l++){
+        		w = graph_->windows[l+k*i];
+        		cout<<"w_idx "<<w->_index<<endl;
+        		cout<<"w_idx1 "<<w->_index1<<endl;
+				cout<<"w_idx2 "<<w->_index2<<endl;
+				cout<<"w_x0 "<<w->_x0<<endl;
+				cout<<"w_y0 "<<w->_y0<<endl;
+				cout<<"w_x1 "<<w->_x1<<endl;
+				cout<<"x_y1 "<<w->_y1<<endl;
+				cout<<endl;
+				cout<<endl;
+        	}
+        	
+        }*/
+        //Window* w;
         it = (graph_->shapes).begin();
         while(it!=(graph_->shapes).end()){
-        	if((*it)->color != 0){
-        	x1 = ((*it)->_x0 - box_x0)/omega;//
-        	y1 = ((*it)->_y0 - box_y0)/omega;//
-			//box_index1 = x1 + y1 * i;
-        	x2 = ((*it)->_x1 - box_x0)/omega;//
-        	y2 = ((*it)->_y1 - box_y0)/omega;//
-			//box_index2 = x2 + y2*i;
 
-			for(int a = x1; a <= x2; ++a)
+        	if((*it)->color != 0){
+	        	x1 = ((*it)->_x0 - box_x0)/omega;//
+	        	y1 = ((*it)->_y0 - box_y0)/omega;//
+				//box_index1 = x1 + y1 * i;
+	        	x2 = ((*it)->_x1 - box_x0)/omega;//
+	        	y2 = ((*it)->_y1 - box_y0)/omega;//
+				//box_index2 = x2 + y2*i;
+
 				for(int b = y1; b <= y2; ++b){
-					
-					w = graph_->windows[a + b*i];
-					(*it)->window.push_back(w);
-					(w->member).push_back(*it);
+					for(int a = x1; a <= x2; ++a){
+						
+						w = graph_->windows[a + b*i];
+						(*it)->window.push_back(w);
+						(w->member).push_back(*it);
+					}
+				}
+				//rightmost up-most
+				//x1 = x3, x2 = x4, y1 = y3, y2= y4
+				x3 = (box_x1 - (*it)->_x0)/omega;
+				y3 = (box_y1 - (*it)->_y0)/omega;
+				x4 = (box_x1 - (*it)->_x1)/omega;
+				y4 = (box_y1 - (*it)->_y1)/omega;
+
+
+				/*cout<<"x3 "<<x3<<endl;
+				cout<<"y3 "<<y3<<endl;
+				cout<<"x4 "<<x4<<endl;
+				cout<<"y4 "<<y4<<endl;
+				cout<<endl;*/
+				if(omega * j + box_y0 != box_y1){
+					if((y2 != j-1) && (y4 == 0)){
+						for(int a = x4; a <= j-1-x2; ++a) {//cout<<"id "<<(*it)->_id<<endl;cout<<"asdfasdf"<<endl;
+							w = graph_->windows[ i*j-1 - a];
+							(*it)->window.push_back(w);
+							(w->member).push_back(*it);
+						}
+						/*if((x2!=j-1) && (x4 == 0)){
+							w = graph_->windows[i*j-1];
+							(*it)->window.push_back(w);
+							(w->member).push_back(*it);
+						}*/
+					}
 				}
 
-			//rightmost up-most
-			x1 = (box_x1 - (*it)->_x0)/omega;
-			y1 = (box_y1 - (*it)->_y0)/omega;
-			x2 = (box_x1 - (*it)->_x1)/omega;
-			y2 = (box_y1 - (*it)->_y1)/omega;
-				if(y2==0)
-					for(int a = x1; a <= x2; ++a) {
-						w = graph_->windows[ i*j-1 - a];
-						(*it)->window.push_back(w);
-						(w->member).push_back(*it);
+				if(omega * i + box_x0 != box_x1){
+					if((x2!=j-1) && (x4 == 0)){
+						for(int b = y4; b <= j-1-y2; ++b) {//cout<<"id "<<(*it)->_id<<endl;cout<<"jeeieieie"<<endl;
+							//if((*it)->_id == 15){cout<<x1<<" "<<x2<<" "<<x3}
+							if((y4 == 0)&&(y2 != j-1)){
+								if(b != y4){
+								w = graph_->windows[ i*j-1 - b*i];
+								(*it)->window.push_back(w);
+								(w->member).push_back(*it);
+								}
+							}else{
+								w = graph_->windows[ i*j-1 - b*i];
+								(*it)->window.push_back(w);
+								(w->member).push_back(*it);
+							}
+						}
 					}
-				if(x2==0)
-					for(int b = y1; b <= y2; ++b) {
-						w = graph_->windows[ i*j-1 - b*i];
-						(*it)->window.push_back(w);
-						(w->member).push_back(*it);
-					}
+				}
 			}
         	it++;
         }
+		vector<Window*>::iterator itw = windows.begin();
+		while(itw != windows.end()){
+			(*itw)->calden();
+			itw++;
+		}
+
+
+
 
 }
 
@@ -521,6 +600,7 @@ void Graph::printShapes()
 		}
 		cout << "	color:" << shape->color << endl;
 	}
+
 	vector<Window*>::iterator it1;
 	
 	cout << "Windows: " << windows.size() << endl;
@@ -535,6 +615,29 @@ void Graph::printShapes()
 			cout << (*it1)->member[i]->_id << ", " ;
 		cout << endl;
 	}
+
+
+
+}
+
+void Graph::printWindows()
+{
+	vector<Window*>::iterator it;
+	
+	cout << "Windows: " << windows.size() << endl;
+	cout << "Window length" << omega << endl;
+	for ( it = windows.begin() ; it != windows.end() ; it++ )
+	{
+		cout << "#window" << (*it)->_index1 << (*it)->_index2 << ":"<< endl;
+		cout << "	density:" << (*it)->_density1 << ", " << (*it)->_density2 << endl;
+		cout << "	size:" << (*it)->member.size() << endl;
+		cout << "	" ;
+		for(int i=0; i<(*it)->member.size(); i++) 
+			cout << (*it)->member[i]->_id << ", " ;
+		cout << endl;
+	}
+	for (int i=0; i<shapes.size(); i++) 
+		cout << shapes[i]->_id << ", " << endl;
 
 }
 
@@ -663,7 +766,7 @@ void Graph::output(ostream& outfile)
 
 int Window::area(Shape* a){
 
-	int x1, x0, y1, y0;//indicates window coordinates
+	/*int x1, x0, y1, y0;//indicates window coordinates
 	int omega = graph_->omega;
 	int i = (graph_->box_x1 - graph_->box_x0)/omega + 1;//how many windows in x in the box
     int j = (graph_->box_y1 - graph_->box_y0)/omega + 1;//how many windows in y in the box
@@ -682,14 +785,39 @@ int Window::area(Shape* a){
 		y0 = _index1 / i + graph_->box_y0;
 		y1 = y0 + omega;
 	}
-
+	*/
+	if(a->_y1 > _y1){
+		if(a->_x1 > _x1){
+			return (_x1 - a->_x0)*(_y1 - a->_y0);
+		}else if(a->_x0 < _x0){
+			return (a->_x1 - _x0)*(_y1 - a->_y0);
+		}else{
+			return (_y1 - a->_y0)*(a->_x1 - a->_x0);
+		}
+	}else if(a->_y0 < _y0){
+		if(a->_x1 > _x1){
+			return (a->_y1 - _y0)*(_x1 - a->_x0);
+		}else if(a->_x0 < _x0){
+			return (a->_y1 - _y0)*(a->_x1 - _x0);
+		}else{
+			return (a->_y1 - _y0)*(a->_x1 - a->_x0);
+		}
+	}else {
+		if(a->_x1 > _x1){
+			return (a->_y1 - a->_y0)*(_x1 - a->_x0);
+		}else if(a->_x0 < _x0){
+			return (a->_y1 - a->_y0)*(a->_x1 - _x0);
+		}else{
+			return (a->_y1 - a->_y0)*(a->_x1 - a->_x0);
+		}
+	}/*
 	int countx1, countx2, county1, county2;
 	countx1 = (a->_x0 > x0)? a->_x0: x0;
 	countx2 = (a->_x1 < x1)? a->_x1: x1;
 	county1 = (a->_y0 > y0)? a->_y0: y0;
 	county2 = (a->_y1 < y1)? a->_y1: y1;
 
-	return (countx2 - countx1)*(county2 - county1);
+	return (countx2 - countx1)*(county2 - county1);*/
 }
 
 int Window::calden(){
@@ -709,8 +837,8 @@ int Window::calden(){
 	}
 	cout<<"color1 " <<color1<<endl;
 	cout<<"color2 "<<color2<<endl;
-	_density1 = color1 / (omega*omega);
-	_density2 = color2 / (omega*omega);
+	_density1 = 100*color1 / (omega*omega);
+	_density2 = 100*color2 / (omega*omega);
 	_difference = _density1 - _density2;
 	_difference = (_difference > 0)? _difference: -_difference;
 	return _difference;	

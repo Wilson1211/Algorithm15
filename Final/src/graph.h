@@ -36,12 +36,16 @@ public:
 	int _index;
 	int _index1;//y
 	int _index2;//x
+	int _x0;
+	int _x1;
+	int _y0;
+	int _y1;
 	float _density1;
 	float _density2;
 	float _difference;
 	vector<Shape*> member;
-	
 };
+
 class Shape{
 
 	public:
@@ -84,6 +88,7 @@ class Graph{
 
 		//print for debug
 		void printShapes() ;
+		void printWindows();
 		void printColor() {};
 
 		//output
@@ -103,6 +108,5 @@ class Graph{
 		int beta;
 		int omega;
 };
-
 
 #endif
