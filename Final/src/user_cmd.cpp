@@ -393,10 +393,16 @@ PrintCmd::PrintCmd(const char * const name) : Cmd(name) {
     opt->addFlag("help");
     optMgr_.regOpt(opt);
 
-    opt = new Opt(Opt::STR_REQ,
+    opt = new Opt(Opt::BOOL,
                   "Print all shapes.",
                   "#shape<_id>  edges:");
     opt->addFlag("s");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::BOOL,
+                  "Print all windows.",
+                  "#windows<index1 index2> , density, member");
+    opt->addFlag("w");
     optMgr_.regOpt(opt);
 
 }
@@ -422,8 +428,8 @@ bool PrintCmd::exec(int argc, char **argv) {
         return true;
     }
 
-    if (optMgr_.getParsedOpt("c")) {
-        graph_->printColor();
+    if (optMgr_.getParsedOpt("w")) {
+        graph_->printWindows();
         return true;
     }
 

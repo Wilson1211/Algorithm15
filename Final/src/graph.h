@@ -30,6 +30,18 @@ class Edge{
 
 };
 
+class Window{//new
+public:
+	int calden();//calculate density
+
+	int _index1;
+	int _index2;
+	int _density1;
+	int _density2;
+	int _difference;
+	int vector<Shape*> member;
+};
+
 class Shape{
 
 	public:
@@ -72,6 +84,7 @@ class Graph{
 
 		//print for debug
 		void printShapes() ;
+		void printWindows();
 		void printColor() {};
 
 		//output
@@ -92,16 +105,4 @@ class Graph{
 		int omega;
 };
 
-class Window{//new
-public:
-	int calden();//calculate density
-
-	int _index1;
-	int _index2;
-	int _density1;
-	int _density2;
-	int _difference;
-	int vector<Shape*> member;
-	vec
-};
 #endif

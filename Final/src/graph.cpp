@@ -466,6 +466,26 @@ void Graph::printShapes()
 		}
 		cout << "	color:" << shape->color << endl;
 	}
+
+
+}
+
+void Graph::printWindows()
+{
+	vector<Window*>::iterator it;
+	
+	cout << "Windows: " << windows.size() << endl;
+	cout << "Window length" << omega << endl;
+	for ( it = windows.begin() ; it != windows.end() ; it++ )
+	{
+		cout << "#window" << it->_index1 << it->_index2 << ":"<< endl;
+		cout << "	density:" << it->_density1 << ", " << it->_density2 << endl;
+		cout << "	size:" << it->member.size() << endl;
+		cout << "	" ;
+		for(int i=0l i<it->member.size(); i++) 
+			cout << it->member[i]->_id << ", " ;
+		cout << endl;
+	}
 }
 
 void Graph::reset_travel()
