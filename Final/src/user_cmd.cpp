@@ -448,7 +448,7 @@ OutputCmd::OutputCmd(const char * const name) : Cmd(name) {
     opt->addFlag("o");
     optMgr_.regOpt(opt);
 
-     opt = new Opt(Opt::STR_REQ,
+     opt = new Opt(Opt::BOOL,
                   "print the result. ",
                   "P");
     opt->addFlag("p");
@@ -471,9 +471,17 @@ bool OutputCmd::exec(int argc, char **argv) {
         return false;
     }
 
-    if (optMgr_.getParsedOpt("p")) // print on screen
-
-
-
+    string fname;
+    if (optMgr_.getParsedOpt("p")) // print on screen 
+        graph_->output(cout);
+    else if(optMgr_.getParsedOpt("o")) {
+        fname =  optMgr_.getParsedValue("o");
+        ofstream outfile(fname.c_str(), ios::out);
+        graph_->output(outfile);
+    }
+    else {
+        ofstream outfile("output", ios::out);
+        graph_->output(outfile);
+    }
     return true;
 }

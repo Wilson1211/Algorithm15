@@ -392,9 +392,9 @@ void Graph::Color()
         //////////////////
 
         int x1, x2;
-        int y1, x2;
+        int y1, y2;
         int i, j;
-        vector<Shape*>::iterator it = (graph_->shapes).begin();
+ /*       vector<Shape*>::iterator it = (graph_->shapes).begin();
         while(it != (graph_->shapes).end()){
         	if((*it)->color != 0){
         		box_x0 = (box_x0>(*it)->x0)? (*it)->x0: box_x0;
@@ -426,7 +426,7 @@ void Graph::Color()
 
 			}
         	it++;
-        }
+        }*/
 
 }
 
@@ -550,7 +550,7 @@ void Graph::output(ostream& outfile)
 			}
 		}
 		output << "GROUP" << endl;
-<<<<<<< HEAD
+
 		//NO color
 		for(int no=1; no <=color0.size();no++) {
 			outfile << "NO[" << no << "]=" << color0[no-1]->_x0<<"," << color0[no-1]->_y0 << "," 
@@ -580,10 +580,5 @@ void Graph::output(ostream& outfile)
             	//CB[2]=860,360,1020,410
 	////////////////////////////////
 */
-}
-=======
-		otuptu << 
-	}*/
-}
 
->>>>>>> 8a4fe12939632778920f5845a1c448e8506612a1
+}
