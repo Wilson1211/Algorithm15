@@ -219,8 +219,9 @@ bool Graph::readFile( char* filename) {
 	}
 	else	return false;*/
 	//////C++ style///////
+	cout<<"!!!!"<<endl;
  	fstream fin(filename);
-cout<<"!!!";
+
 	if(fin.is_open()) {
 		char c; //get single char
 		char buf[1024]; //getline
@@ -360,7 +361,9 @@ void Colorvisit(Shape* u){
             it++;
         }
         return;
-    }
+}
+
+
 void Graph::Color()
 {
 	    graph_->sortShapesByDegree();
@@ -394,7 +397,8 @@ void Graph::Color()
         int x1, x2;
         int y1, y2;
         int i, j;
-        vector<Shape*>::iterator it = (graph_->shapes).begin();
+        box_x0 = 0;box_x1 = 0;box_y0 = 0;box_y1= 0;
+       vector<Shape*>::iterator it = (graph_->shapes).begin();
         while(it != (graph_->shapes).end()){
         	if((*it)->color != 0){
         		box_x0 = (box_x0>(*it)->_x0)? (*it)->_x0: box_x0;
@@ -402,14 +406,15 @@ void Graph::Color()
         		box_y0 = (box_y0>(*it)->_y0)? (*it)->_y0: box_y0;
         		box_y1 = (box_y1<(*it)->_y1)? (*it)->_y1: box_y1;
         	}
-
+        	cout<<"c1\n";
         	it++;
         }
         i = (box_x1 - box_x0)/omega;//how many windows in x in the box
         if( (box_x1 - box_x0) % omega != 0){i++;}
         j = (box_y1 - box_y0)/omega;//how many windows in y in the box
         if((box_y1 - box_y0) % omega != 0){j++;}
-
+        cout<<
+        cout<<"j= "<<j<<endl;
         it = (graph_->shapes).begin();
         int box_index1 ,box_index2;
 
@@ -419,12 +424,15 @@ void Graph::Color()
         		Window* w = new Window;
         		w->_index2 = l;
         		w->_index1 = k;
-        		w->_index = i+j;
+        		w->_index = l+k;
         		(graph_->windows).push_back(w);
+        		//cout<<graph_->windows.size()<<endl;
         	}
+        	cout<<"c3\n";
         }
-
+        cout<<"c4\n";
         Window* w;
+        it = (graph_->shapes).begin();
         while(it!=(graph_->shapes).end()){
 
         	x1 = ((*it)->_x0 - box_x0)/omega;//
@@ -459,7 +467,7 @@ void Graph::Color()
 						(*it)->window.push_back(w);
 						(w->member).push_back(*it);
 					}
-			
+			cout<<"c2\n";
         	it++;
         }
 
@@ -571,7 +579,7 @@ void Graph::output(ostream& outfile)
 			}
 		}
 		output << "GROUP" << endl;
-<<<<<<< HEAD
+
 		//NO color
 		for(int no=1; no <=color0.size();no++) {
 			outfile << "NO[" << no << "]=" << color0[no-1]->_x0<<"," << color0[no-1]->_y0 << "," 
@@ -601,9 +609,14 @@ void Graph::output(ostream& outfile)
             	//CB[2]=860,360,1020,410
 	////////////////////////////////
 */
+
 }
 
+
+//int Window::area(Shape* a){
+
 int Window::area(Shape* a){
+
 	int x1, x0, y1, y0;//indicates window coordinates
 	int omega = graph_->omega;
 	int i = (graph_->box_x1 - graph_->box_x0)/omega + 1;//how many windows in x in the box
@@ -649,7 +662,9 @@ int Window::calden(){
 		it++;
 	}
 
-
+	_density1 = color1 / (omega*omega);
+	_density2 = color2 / (omega*omega);
+	_difference = _density1 - _density2;
+	_difference = (_difference > 0)? _difference: -_difference;
 	return _difference;	
 }
-
