@@ -394,7 +394,7 @@ void Graph::Color()
         int x1, x2;
         int y1, y2;
         int i, j;
- /      vector<Shape*>::iterator it = (graph_->shapes).begin();
+       vector<Shape*>::iterator it = (graph_->shapes).begin();
         while(it != (graph_->shapes).end()){
         	if((*it)->color != 0){
         		box_x0 = (box_x0>(*it)->x0)? (*it)->x0: box_x0;
