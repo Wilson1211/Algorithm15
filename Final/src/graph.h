@@ -36,9 +36,9 @@ public:
 	int _index;
 	int _index1;//y
 	int _index2;//x
-	int _density1;
-	int _density2;
-	int _difference;
+	float _density1;
+	float _density2;
+	float _difference;
 	vector<Shape*> member;
 	
 };
