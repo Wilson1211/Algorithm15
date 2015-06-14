@@ -31,7 +31,7 @@ class Edge{
 };
 class Window{//new
 public:
-	int calden();//calculate density
+	float calden();//calculate density
 	int area(Shape*);
 	int _index;
 	int _index1;//y
@@ -50,11 +50,12 @@ class Shape{
 
 	public:
 		Shape();
-		Shape(int index, int x0, int y0, int x1, int y1) : _id(index), _x0(x0), _y0(y0), _x1(x1), _y1(y1) {};
+		Shape(int index, int x0, int y0, int x1, int y1) : _id(index), _x0(x0), _y0(y0), _x1(x1), _y1(y1) ,repeat(false){};
 		void addEdge(Edge *e);
 		void sortEdge();
 		void inverse();//new
 		bool traveled;
+		bool repeat;
 		int color;
 		int _id;
 		string name;

@@ -385,6 +385,53 @@ void decolor(Shape* u){
 	return;
 }
 
+vector<Shape*> flipv;
+void flipdfs(Shape* u){
+	if(u->traveled == 1){return;}
+	Shape* node;
+	vector<Edge*>::iterator it = (u->edge).begin();
+
+	if(u->color == 1){u->color = 2;}
+	else if(u->color == 2){u->color = 1;}
+	u->traveled = 1;
+	flipv.push_back(u);
+	while(it!= (u->edge).end()){
+		node = (*it)->getNeighbor(u);
+		flipdfs(node);
+		it++;
+	}
+
+}
+
+void flipcolor(Shape* u){
+	graph_->reset_travel();
+	while(flipv.size()!= 0){ flipv.pop_back(); }
+
+	Shape* node;
+	vector<Edge*>::iterator it = (u->edge).begin();
+	if(u->color == 1){u->color = 2;}
+	else if(u->color == 2){u->color = 1;}
+	u->traveled = 1;
+	flipv.push_back(u);
+	while(it!= (u->edge).end()){
+		node = (*it)->getNeighbor(u);
+		if(node->traveled == 0){
+			flipdfs(node);
+		}
+
+		it++;
+	}
+}
+
+void flipbackcolor(){
+	vector<Shape*>::iterator it = flipv.begin();
+	while(it != flipv.end()){
+		if((*it)->color == 1){
+			(*it)->color = 2;
+		}else if((*it)->color == 2){(*it)->color = 1;}
+		it++;
+	}
+}
 void Graph::Color()
 {
 	    graph_->sortShapesByDegree();
@@ -439,9 +486,10 @@ void Graph::Color()
         			box_y1 = (*it)->_y1;
         			flag1 = 1;
         		}
+        		/*
         		cout<<(*it)->_id<<endl;
         		cout<<(*it)->_x0 <<endl;
-        		cout<<(*it)->_y0 <<endl;
+        		cout<<(*it)->_y0 <<endl;*/
         		box_x0 = (box_x0>(*it)->_x0)? (*it)->_x0: box_x0;
         		box_x1 = (box_x1<(*it)->_x1)? (*it)->_x1: box_x1;
         		box_y0 = (box_y0>(*it)->_y0)? (*it)->_y0: box_y0;
@@ -587,7 +635,34 @@ void Graph::Color()
 void Graph::printShapes()
 {
 	map<int, Shape *>::iterator it;
-	
+
+
+
+	/*vector<Window*>::iterator itt1;
+	cout<<"sdfsdfsssssssssssssssssssss"<<endl;
+	vector<Shape*>::iterator itt; 
+	vector<Shape*>::iterator itt2;
+	itt1 = windows.begin();
+	itt1++;
+	itt = (*itt1)->member.begin();
+	itt++;
+	flipcolor(*itt);
+	itt2 = flipv.begin();
+	while(itt2!= flipv.end()){
+		cout<<(*itt2)->_id<<"      "<<(*itt2)->color<<endl;
+		itt2++;
+	}
+	cout<<"sdfsdfsssssssssssssssssssss"<<endl;
+	flipbackcolor();
+	itt2 = flipv.begin();
+	while(itt2!= flipv.end()){
+		cout<<(*itt2)->_id<<"      "<<(*itt2)->color<<endl;
+		itt2++;
+	}
+	cout<<"sdfsdfsssssssssssssssssssss"<<endl;*/
+
+
+
 	cout << alpha << ", " << beta << ", " << omega << endl;
 	for ( it = shapesMap.begin() ; it != shapesMap.end() ; it++ )
 	{
@@ -623,7 +698,8 @@ void Graph::printShapes()
 void Graph::printWindows()
 {
 	vector<Window*>::iterator it;
-	
+
+
 	cout << "Windows: " << windows.size() << endl;
 	cout << "Window length" << omega << endl;
 	for ( it = windows.begin() ; it != windows.end() ; it++ )
@@ -820,7 +896,7 @@ int Window::area(Shape* a){
 	return (countx2 - countx1)*(county2 - county1);*/
 }
 
-int Window::calden(){
+float Window::calden(){
 	//vector<Shape*> member;
 	vector<Shape*>::iterator it = member.begin();
 	
@@ -835,10 +911,10 @@ int Window::calden(){
 
 		it++;
 	}
-	cout<<"color1 " <<color1<<endl;
-	cout<<"color2 "<<color2<<endl;
-	_density1 = 100*color1 / (omega*omega);
-	_density2 = 100*color2 / (omega*omega);
+	//cout<<"color1 " <<color1<<endl;
+	//cout<<"color2 "<<color2<<endl;
+	_density1 = 100*(float)color1 / (omega*omega);
+	_density2 = 100*(float)color2 / (omega*omega);
 	_difference = _density1 - _density2;
 	_difference = (_difference > 0)? _difference: -_difference;
 	return _difference;	
