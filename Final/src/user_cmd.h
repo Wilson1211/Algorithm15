@@ -84,5 +84,15 @@ public:
     bool exec(int argc, char **argv);
 };
 
+//optimize
+class OptimizeCmd : public CommonNs::Cmd {
+public:
+         OptimizeCmd(const char * const name);
+         ~OptimizeCmd();
+
+    bool exec(int argc, char **argv);
+};
+
+
 
 #endif

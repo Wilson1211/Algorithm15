@@ -491,3 +491,35 @@ bool OutputCmd::exec(int argc, char **argv) {
     }
     return true;
 }
+
+//Optimize
+OptimizeCmd::OptimizeCmd(const char * const name) : Cmd(name) {
+    optMgr_.setShortDes("Optimize");
+    optMgr_.setDes("Optmize");
+
+    Opt *opt = new Opt(Opt::BOOL, "print usage", "");
+    opt->addFlag("h");
+    opt->addFlag("help");
+    optMgr_.regOpt(opt);
+
+}
+
+OptimizeCmd::~OptimizeCmd() {}
+
+bool OptimizeCmd::exec(int argc, char **argv) {
+    //optMgr_.parse(argc, argv);
+    //cout << "Hi" << endl;
+    if (optMgr_.getParsedOpt("h")) {
+        optMgr_.usage();
+        return true;
+    }
+
+     if(graph_ == 0) {
+        fprintf(stderr, "**ERROR OptimizeCmd::exec(): need to read file before doing optimizing\n");
+        return false;
+    }
+
+    graph_->optimize();
+    return true;
+}
+
