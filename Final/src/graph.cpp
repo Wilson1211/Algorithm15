@@ -257,13 +257,23 @@ bool Graph::readFile( char* filename) {
 			shape_count = 0;
 			while(shape_count < 4) {
 				fin.get(c);
+				int sign=1;
+				/*if(c == '-')
+					sign = -1;*/ 
 				int num_char=0;
-				while(isalnum(c)) {
-					int temp = c - '0';
-					num_char *= 10;
-					num_char += temp;
-					fin.get(c);
+				while(isalnum(c) || c=='-') {
+					if(c=='-') {
+						sign = -1;
+						fin.get(c);
+					}
+					else {
+						int temp = c - '0';
+						num_char *= 10;
+						num_char += temp;
+						fin.get(c);
+					}
 				}		
+				num_char *= sign;
 				coordinate[shape_count] = num_char;
 				shape_count++;
 			}
@@ -274,7 +284,7 @@ bool Graph::readFile( char* filename) {
 		}
 		//shapes[0] is dummy shape (0,0) (0,0)
 		shapes.pop_back();
-		shapesMap.erase(20);
+		shapesMap.erase(index);
 	}
 	else {
 		return false;
@@ -782,7 +792,7 @@ void Graph::sortWindowsByDensity()
 {
 	sort(windows.begin(), windows.end(), WindowCompByDensity);
 }
-vector<Shape*> flipv;
+/*vector<Shape*> flipv;
 void flipdfs(Shape* u){
 	if(u->traveled == 1){return;}
 	Shape* node;
@@ -829,7 +839,7 @@ void flipbackcolor(){
 		it++;
 	}
 }
-
+*/
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1021,13 +1031,11 @@ float Window::calden(){
 
 		it++;
 	}
-<<<<<<< HEAD
+
 	//cout<<"color1 " <<color1<<endl;
 	//cout<<"color2 "<<color2<<endl;
-=======
-	cout<<"color1 " <<color1<<endl;
-	cout<<"color2 "<<color2<<endl;
->>>>>>> 0338ad95c02841c7392bcb07a70fef611f2a5f2c
+
+
 	_density1 = 100*(float)color1 / (omega*omega);
 	_density2 = 100*(float)color2 / (omega*omega);
 	_difference = _density1 - _density2;
