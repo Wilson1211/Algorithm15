@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <ctype.h>
+#include <queue>
 Graph* graph_ = 0;
 
 size_t
@@ -692,6 +693,115 @@ void Graph::connect() {
 	}
 }
 
+
+bool WindowCompByDensity( const Window* A, const Window* B ){
+	if(A->_difference > B-> _difference) 
+		return true;
+	else 
+		return false;
+}
+
+
+void Graph::sortWindowsByDensity()
+{
+	sort(windows.begin(), windows.end(), WindowCompByDensity);
+}
+vector<Shape*> flipv;
+void flipdfs(Shape* u){
+	if(u->traveled == 1){return;}
+	Shape* node;
+	vector<Edge*>::iterator it = (u->edge).begin();
+
+	if(u->color == 1){u->color = 2;}
+	else if(u->color == 2){u->color = 1;}
+	u->traveled = 1;
+	flipv.push_back(u);
+	while(it!= (u->edge).end()){
+		node = (*it)->getNeighbor(u);
+		flipdfs(node);
+		it++;
+	}
+
+}
+
+void flipcolor(Shape* u){
+	graph_->reset_travel();
+	while(flipv.size()!= 0){ flipv.pop_back(); }
+
+	Shape* node;
+	vector<Edge*>::iterator it = (u->edge).begin();
+	if(u->color == 1){u->color = 2;}
+	else if(u->color == 2){u->color = 1;}
+	u->traveled = 1;
+	flipv.push_back(u);
+	while(it!= (u->edge).end()){
+		node = (*it)->getNeighbor(u);
+		if(node->traveled == 0){
+			flipdfs(node);
+		}
+
+		it++;
+	}
+}
+
+void flipbackcolor(){
+	vector<Shape*>::iterator it = flipv.begin();
+	while(it != flipv.end()){
+		if((*it)->color == 1){
+			(*it)->color = 2;
+		}else if((*it)->color == 2){(*it)->color = 1;}
+		it++;
+	}
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void Graph::optimize()
+{
+	graph_->sortWindowsByDensity();
+
+	queue<Shape*> tasklist, tasklist_cross;
+
+	vector<Window*>::iterator it;
+	float	form_diff;
+	for(it = windows.begin(); it != windows.end(); it++) {
+		//int group; use group can avoid duplicated shapes
+		for(int i=0; i<(*it)->member.size(); i++) {
+			if((*it)->member[i]->window.size() > 1 )
+				tasklist_cross.push((*it)->member[i]);
+			else
+				tasklist.push((*it)->member[i]);
+		}
+	}
+
+	while(tasklist.size() != 0) {
+		Shape* shape = tasklist.front();
+		tasklist.pop();
+		form_diff = shape->window[0]->_difference;
+		if(!(shape->repeat)) {
+			flipcolor(shape);
+			//shape->window[0]->calden();
+			if(form_diff < shape->window[0]->calden())
+				flipbackcolor();
+		}	
+	}
+
+	while(tasklist_cross.size()){
+		Shape* shape = tasklist_cross.front();
+		tasklist_cross.pop();
+		form_diff = shape->window[0]->_difference;
+		if(!(shape->repeat)) {
+			flipcolor(shape);
+			//shape->window[0]->calden();
+			if(form_diff < shape->window[0]->calden())
+				flipbackcolor();
+		}	
+	}
+	
+
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Graph::output(ostream& outfile)
 {/*
 	//output windows
@@ -820,7 +930,7 @@ int Window::area(Shape* a){
 	return (countx2 - countx1)*(county2 - county1);*/
 }
 
-int Window::calden(){
+float Window::calden(){
 	//vector<Shape*> member;
 	vector<Shape*>::iterator it = member.begin();
 	
@@ -837,8 +947,8 @@ int Window::calden(){
 	}
 	cout<<"color1 " <<color1<<endl;
 	cout<<"color2 "<<color2<<endl;
-	_density1 = 100*color1 / (omega*omega);
-	_density2 = 100*color2 / (omega*omega);
+	_density1 = 100*(float)color1 / (omega*omega);
+	_density2 = 100*(float)color2 / (omega*omega);
 	_difference = _density1 - _density2;
 	_difference = (_difference > 0)? _difference: -_difference;
 	return _difference;	

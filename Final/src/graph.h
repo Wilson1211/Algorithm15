@@ -31,7 +31,7 @@ class Edge{
 };
 class Window{//new
 public:
-	int calden();//calculate density
+	float calden();//calculate density
 	int area(Shape*);
 	int _index;
 	int _index1;//y
@@ -50,7 +50,7 @@ class Shape{
 
 	public:
 		Shape();
-		Shape(int index, int x0, int y0, int x1, int y1) : _id(index), _x0(x0), _y0(y0), _x1(x1), _y1(y1) {};
+		Shape(int index, int x0, int y0, int x1, int y1) : _id(index), _x0(x0), _y0(y0), _x1(x1), _y1(y1), repeat(false) {};
 		void addEdge(Edge *e);
 		void sortEdge();
 		void inverse();//new
@@ -65,6 +65,7 @@ class Shape{
 		int _x1;
 		int _y1;
 		int _group;//new
+		bool repeat;
 };
 
 class Graph{
@@ -76,7 +77,8 @@ class Graph{
 		void addEdge(const int& v1, const int& v2);
 		void sortEdgesOfShape();           
  		void sortShapesByDegree();      
- 		void sortShapesByID();               
+ 		void sortShapesByID();
+ 		void sortWindowsByDensity();               
 		void init();		            
 		bool readFile( char* filename);
 		void DFS(Shape* v, ostream& outfile, int& counter);
@@ -84,6 +86,7 @@ class Graph{
 		void Color();
 		void connect();
 		void reset_travel();
+		void optimize();
 		Shape * getShapeById(const int& id);
 
 		//print for debug

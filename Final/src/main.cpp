@@ -131,6 +131,8 @@ void initCmds(CmdMgr *mgr) {
   mgr->regCmd(outputCmd);*/
   Cmd *outputCmd = new OutputCmd("output");
   mgr->regCmd(outputCmd);
+  Cmd* optimizeCmd = new OptimizeCmd("optimize");
+  mgr->regCmd(optimizeCmd);
 
 }
 
