@@ -741,7 +741,7 @@ void Graph::reset_travel()
 
 #include <map>
 #include <cmath>
-struct cmpAbsInt {
+/*struct cmpAbsInt {
     bool operator()(const int a, const int b) {//if error, send ref
         return abs(a) < abs(b);
     }
@@ -778,7 +778,51 @@ void Graph::connect() {
 				}
 	}
 }
-
+*/
+class LR{
+public:
+	LR();
+	LR(int v, bool r): value(v), right(r){};
+	int value;
+	bool right;
+};
+struct cmpAbsInt {
+    bool operator()(const LR& a, const LR& b) {//if error, send ref
+        return a.value < b.value;
+    }
+};
+void Graph::connect() {
+	multimap<LR, Shape*, cmpAbsInt> x, y;
+	for(int i = 0; i < shapes.size(); ++i) {
+		x.insert( pair<LR, Shape*>( LR(shapes[i]->_x0, false), shapes[i]) );
+		x.insert( pair<LR, Shape*>( LR(shapes[i]->_x1, true ), shapes[i]) );
+		y.insert( pair<LR, Shape*>( LR(shapes[i]->_y0, false), shapes[i]) );
+		y.insert( pair<LR, Shape*>( LR(shapes[i]->_y1, true ), shapes[i]) );
+	}
+	multimap<LR, Shape*>::iterator i, j;
+	for(i = x.begin(); i != x.end(); ++i) {
+		if((i->first).right)
+			for(j = i; j != x.end() && alpha + (i->first).value > (j->first).value; ++j)
+				if((j->first).right==false) {
+					if( (i->second->_y0 < j->second->_y0 && j->second->_y0 < i->second->_y1)
+					  ||(i->second->_y0 < j->second->_y1 && j->second->_y1 < i->second->_y1)
+					  ||(j->second->_y0 < i->second->_y0 && i->second->_y0 < j->second->_y1)
+					  ||(j->second->_y0 < i->second->_y1 && i->second->_y1 < j->second->_y1) )
+						addEdge(i->second->_id, j->second->_id);
+				}
+	}
+	for(i = y.begin(); i != y.end(); ++i) {
+		if((i->first).right)
+			for(j = i; j != y.end() && beta  + (i->first).value > (j->first).value; ++j)
+				if((j->first).right==false) {
+					if( (i->second->_x0 < j->second->_x0 && j->second->_x0 < i->second->_x1)
+					  ||(i->second->_x0 < j->second->_x1 && j->second->_x1 < i->second->_x1)
+					  ||(j->second->_x0 < i->second->_x0 && i->second->_x0 < j->second->_x1)
+					  ||(j->second->_x0 < i->second->_x1 && i->second->_x1 < j->second->_x1) )
+						addEdge(i->second->_id, j->second->_id);
+				}
+	}
+}
 
 bool WindowCompByDensity( const Window* A, const Window* B ){
 	if(A->_difference > B-> _difference) 
