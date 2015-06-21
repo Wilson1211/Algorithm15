@@ -741,6 +741,7 @@ void Graph::reset_travel()
 
 #include <map>
 #include <cmath>
+
 struct cmpAbsInt {
     bool operator()(const int a, const int b) {//if error, send ref
         return abs(a) < abs(b);
@@ -861,6 +862,20 @@ void Graph::optimize()
 		}
 	}
 
+	//cross window	
+	while(tasklist_cross.size()){
+		Shape* shape = tasklist_cross.front();
+		tasklist_cross.pop();
+		form_diff = shape->window[0]->_difference;
+		if(!(shape->repeat)) {
+			flipcolor(shape);
+			//shape->window[0]->calden();
+			if(form_diff < shape->window[0]->calden())
+				flipbackcolor();
+		}	
+	}
+
+	//inside window
 	while(tasklist.size() != 0) {
 		Shape* shape = tasklist.front();
 		tasklist.pop();
@@ -873,17 +888,6 @@ void Graph::optimize()
 		}	
 	}
 
-	while(tasklist_cross.size()){
-		Shape* shape = tasklist_cross.front();
-		tasklist_cross.pop();
-		form_diff = shape->window[0]->_difference;
-		if(!(shape->repeat)) {
-			flipcolor(shape);
-			//shape->window[0]->calden();
-			if(form_diff < shape->window[0]->calden())
-				flipbackcolor();
-		}	
-	}
 	
 
 }
@@ -953,8 +957,8 @@ void Graph::output(ostream& outfile)
             	//CB[1]=540,270,725,330
             	//CB[2]=860,360,1020,410
 	////////////////////////////////
-*/
 
+*/
 }
 
 
