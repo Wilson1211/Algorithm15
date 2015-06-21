@@ -357,6 +357,7 @@ int encolor(Shape* u){
         else{return 1;}
 }
 int i=1;
+int global_int = -1;
 bool Colorvisit(Shape* u){
 		i = 1;
 		int k1 = 1;
@@ -443,6 +444,24 @@ void flipbackcolor(){
 		it++;
 	}
 }
+
+void dfs_visit(Shape* u){
+	if(u->_group != -1){return ;}
+	vector<Edge*>::iterator it = (u->edge).begin();
+	Shape* node;
+	while(it!= (u->edge).end()){cout<<"778787"<<endl;
+		//if(u->_group == -1){
+			u->_group = global_int;
+			node = (*it)->getNeighbor(u);
+			if(node->_group == -1){dfs_visit(node);}
+			
+		//}
+		it++;
+	}
+
+}
+
+//int global_int = -1;
 void Graph::Color()
 {
 	    graph_->sortShapesByDegree();
@@ -453,13 +472,13 @@ void Graph::Color()
         int flag = 1;
         int max_color = 1;
         Shape * node ;
-
+        
         it1 = (graph_->shapes).begin();
         while(it1 != graph_->shapes.end()){
             (*it1)->color = 0;
             it1++;
         }
-
+        
         it1 = (graph_->shapes).begin();
         int edgemax = (*it1)->edge.size();
         int k1;
@@ -467,6 +486,7 @@ void Graph::Color()
         while(it1!=(graph_->shapes).end()){//first check all max edges degree vertices, and color them
             //if((*it1)->edge.size() < edgemax){break;}
             if((*it1)->color != 0){it1++;continue;}
+            
             encolor(*it1);
             k1 = Colorvisit(*it1);
             if(k1 == 0){decolor(*it1);}
@@ -518,7 +538,7 @@ void Graph::Color()
         
         it = (graph_->shapes).begin();
         int box_index1 ,box_index2;
-
+        
         int k, l;
         for(k=0;k<i;k++){
         	for(l=0;l<j;l++){
@@ -563,25 +583,32 @@ void Graph::Color()
         	
         }*/
         //Window* w;
+        	
         it = (graph_->shapes).begin();
         while(it!=(graph_->shapes).end()){
-
-        	if((*it)->color != 0){
+        	if((*it)->color != 0){//cout<<"11"<<endl;
 	        	x1 = ((*it)->_x0 - box_x0)/omega;//
 	        	y1 = ((*it)->_y0 - box_y0)/omega;//
 				//box_index1 = x1 + y1 * i;
-	        	x2 = ((*it)->_x1 - box_x0)/omega;//
-	        	y2 = ((*it)->_y1 - box_y0)/omega;//
+	        	x2 = ((*it)->_x1 - box_x0 -0.1)/omega;//
+	        	//if((*it)->_x1 == box_x1){x2--;}
+	        	y2 = ((*it)->_y1 - box_y0 -0.1)/omega;//
+	        	//if((*it)->_y1 == box_y1){y2--;}
 				//box_index2 = x2 + y2*i;
-
+	        	/*cout<<y1<<endl;
+	        	cout<<y2<<endl;
+	        	cout<<x1<<endl;
+	        	cout<<x2<<endl;
+	        	cout<<i<<endl;
+	        	cout<<graph_->windows.size()<<endl;*/
 				for(int b = y1; b <= y2; ++b){
 					for(int a = x1; a <= x2; ++a){
-						
+						cout << a+b*i<<"!!!\n";
 						w = graph_->windows[a + b*i];
 						(*it)->window.push_back(w);
 						(w->member).push_back(*it);
 					}
-				}
+				}//cout<<"112"<<endl;
 				//rightmost up-most
 				//x1 = x3, x2 = x4, y1 = y3, y2= y4
 				x3 = (box_x1 - (*it)->_x0)/omega;
@@ -609,7 +636,7 @@ void Graph::Color()
 						}*/
 					}
 				}
-
+				//cout<<"89898989"<<endl;
 				if(omega * i + box_x0 != box_x1){
 					if((x2!=j-1) && (x4 == 0)){
 						for(int b = y4; b <= j-1-y2; ++b) {//cout<<"id "<<(*it)->_id<<endl;cout<<"jeeieieie"<<endl;
@@ -637,8 +664,24 @@ void Graph::Color()
 			itw++;
 		}
 
+		///////////////////input group
+		it = (graph_->shapes).begin();//int k, l
+		k = 0;
+		while(it != (graph_->shapes).end()){
+			if((*it)->_group == -1){global_int++; dfs_visit((*it));}
 
-
+			it++;
+		}
+		/*
+		vector<Shape*> group_out[global_int+1]; 
+		while(it!= (graph_->shapes).end()){
+			group_out[(*it)->_group].push_back((*it));
+			it++;
+		}
+		while(k != global_int+1){
+			group.push_back();
+			k++;
+		}*/
 
 }
 
@@ -679,6 +722,7 @@ void Graph::printShapes()
 	{
 		Shape *shape = (*it).second;
 		cout << "#shape<"<< shape->_id << ">" << endl;
+		cout<< "which group "<<shape->_group<<endl; 
 		cout << shape->_x0 << ", " << shape->_y0 << ", " << shape->_x1 << ", " << shape->_y1 << endl;
 		cout << "	edges: " << endl;
 		for(int i=0; i<shape->edge.size();i++) {
@@ -934,6 +978,15 @@ void Graph::optimize()
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Graph::output(ostream& outfile)
 {/*
+	////////////////////////////////
+
+
+
+
+
+	///////////////////////////////
+
+
 	//output windows
 	for(int i=0; i< windows.size(); i++) {
 		outfile << "WIN[" << i << "]=" << windows[i]->_x0 << "," << windows[i] << ->_y0 << "," 
@@ -1026,26 +1079,57 @@ int Window::area(Shape* a){
 		y1 = y0 + omega;
 	}
 	*/
-	if(a->_y1 > _y1){
-		if(a->_x1 > _x1){
+	if(a->_y1 >= _y1 && a->_y0 <= _y0){
+		if(a->_x1 >= _x1){
+			if(a->_x0 <= _x0){
+				return (_x1 - _x0)*(_y1 - _y0);
+			}
+			else {
+				return (_x1 - a->_x0)*(_y1 - _y0);
+			}
+		}else{
+			if(a->_x0 <= _x0){
+				return (a->_x1 - _x0)*(_y1 - _y0);
+			}else{
+				return(a->_x1 - a->_x0)*(_y1 - _y0);
+			}
+		}
+	}else if(a->_x1 >= _x1 && a->_x0 <= _x0){
+		if(a->_y1 >= _y1){
+			if(a->_y0 <= _y0){
+				return (_x1 - _x0)*(_y1 - _y0);
+			}else{
+				return (_x1 - _x0)*(_y1 - a->_y0);
+			}
+		}else{
+			if(a->_y0 <= _y0){
+				return (_x1 - _x0)*(a->_y1 - _y0);
+			}else{
+				return (_x1 - _x0)*(a->_y1 - a->_y0);
+			}
+		}
+	}
+
+	if(a->_y1 >= _y1){
+		if(a->_x1 >= _x1){
 			return (_x1 - a->_x0)*(_y1 - a->_y0);
-		}else if(a->_x0 < _x0){
+		}else if(a->_x0 <= _x0){
 			return (a->_x1 - _x0)*(_y1 - a->_y0);
 		}else{
 			return (_y1 - a->_y0)*(a->_x1 - a->_x0);
 		}
-	}else if(a->_y0 < _y0){
-		if(a->_x1 > _x1){
+	}else if(a->_y0 <= _y0){
+		if(a->_x1 >= _x1){
 			return (a->_y1 - _y0)*(_x1 - a->_x0);
-		}else if(a->_x0 < _x0){
+		}else if(a->_x0 <= _x0){
 			return (a->_y1 - _y0)*(a->_x1 - _x0);
 		}else{
 			return (a->_y1 - _y0)*(a->_x1 - a->_x0);
 		}
 	}else {
-		if(a->_x1 > _x1){
+		if(a->_x1 >= _x1){
 			return (a->_y1 - a->_y0)*(_x1 - a->_x0);
-		}else if(a->_x0 < _x0){
+		}else if(a->_x0 <= _x0){
 			return (a->_y1 - a->_y0)*(a->_x1 - _x0);
 		}else{
 			return (a->_y1 - a->_y0)*(a->_x1 - a->_x0);
@@ -1068,16 +1152,16 @@ float Window::calden(){
 	int color1=0, color2=0;
 	while(it!= member.end()){
 		if((*it)->color == 1){
-			color1 += area(*it);
+			color1 += abs(area(*it));
 		}else if((*it)->color == 2){
-			color2 += area(*it);
+			color2 += abs(area(*it));
 		}
 
 		it++;
 	}
 
-	//cout<<"color1 " <<color1<<endl;
-	//cout<<"color2 "<<color2<<endl;
+	cout<<"color1 " <<color1<<endl;
+	cout<<"color2 "<<color2<<endl;
 
 
 	_density1 = 100*(float)color1 / (omega*omega);
