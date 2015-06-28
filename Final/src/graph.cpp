@@ -357,6 +357,7 @@ int encolor(Shape* u){
         else{return 1;}
 }
 int i=1;
+int global_int = -1;
 bool Colorvisit(Shape* u){
 		i = 1;
 		int k1 = 1;
@@ -443,6 +444,25 @@ void flipbackcolor(){
 		it++;
 	}
 }
+
+void dfs_visit(Shape* u){
+	if(u->_group != -1){return ;}
+	u->_group = global_int;
+	vector<Edge*>::iterator it = (u->edge).begin();
+	Shape* node;
+	while(it!= (u->edge).end()){cout<<"778787"<<endl;
+		//if(u->_group == -1){
+			//u->_group = global_int;
+			node = (*it)->getNeighbor(u);
+			if(node->_group == -1){dfs_visit(node);}
+			
+		//}
+		it++;
+	}
+
+}
+
+//int global_int = -1;
 void Graph::Color()
 {
 	    graph_->sortShapesByDegree();
@@ -453,13 +473,13 @@ void Graph::Color()
         int flag = 1;
         int max_color = 1;
         Shape * node ;
-
+        
         it1 = (graph_->shapes).begin();
         while(it1 != graph_->shapes.end()){
             (*it1)->color = 0;
             it1++;
         }
-
+        
         it1 = (graph_->shapes).begin();
         int edgemax = (*it1)->edge.size();
         int k1;
@@ -467,6 +487,7 @@ void Graph::Color()
         while(it1!=(graph_->shapes).end()){//first check all max edges degree vertices, and color them
             //if((*it1)->edge.size() < edgemax){break;}
             if((*it1)->color != 0){it1++;continue;}
+            
             encolor(*it1);
             k1 = Colorvisit(*it1);
             if(k1 == 0){decolor(*it1);}
@@ -518,7 +539,7 @@ void Graph::Color()
         
         it = (graph_->shapes).begin();
         int box_index1 ,box_index2;
-
+        
         int k, l;
         for(k=0;k<i;k++){
         	for(l=0;l<j;l++){
@@ -563,25 +584,32 @@ void Graph::Color()
         	
         }*/
         //Window* w;
+        	
         it = (graph_->shapes).begin();
         while(it!=(graph_->shapes).end()){
-
-        	if((*it)->color != 0){
+        	if((*it)->color != 0){//cout<<"11"<<endl;
 	        	x1 = ((*it)->_x0 - box_x0)/omega;//
 	        	y1 = ((*it)->_y0 - box_y0)/omega;//
 				//box_index1 = x1 + y1 * i;
-	        	x2 = ((*it)->_x1 - box_x0)/omega;//
-	        	y2 = ((*it)->_y1 - box_y0)/omega;//
+	        	x2 = ((*it)->_x1 - box_x0 -0.1)/omega;//
+	        	//if((*it)->_x1 == box_x1){x2--;}
+	        	y2 = ((*it)->_y1 - box_y0 -0.1)/omega;//
+	        	//if((*it)->_y1 == box_y1){y2--;}
 				//box_index2 = x2 + y2*i;
-
+	        	/*cout<<y1<<endl;
+	        	cout<<y2<<endl;
+	        	cout<<x1<<endl;
+	        	cout<<x2<<endl;
+	        	cout<<i<<endl;
+	        	cout<<graph_->windows.size()<<endl;*/
 				for(int b = y1; b <= y2; ++b){
 					for(int a = x1; a <= x2; ++a){
-						
+						cout << a+b*i<<"!!!\n";
 						w = graph_->windows[a + b*i];
 						(*it)->window.push_back(w);
 						(w->member).push_back(*it);
 					}
-				}
+				}//cout<<"112"<<endl;
 				//rightmost up-most
 				//x1 = x3, x2 = x4, y1 = y3, y2= y4
 				x3 = (box_x1 - (*it)->_x0)/omega;
@@ -609,7 +637,7 @@ void Graph::Color()
 						}*/
 					}
 				}
-
+				//cout<<"89898989"<<endl;
 				if(omega * i + box_x0 != box_x1){
 					if((x2!=j-1) && (x4 == 0)){
 						for(int b = y4; b <= j-1-y2; ++b) {//cout<<"id "<<(*it)->_id<<endl;cout<<"jeeieieie"<<endl;
@@ -637,8 +665,24 @@ void Graph::Color()
 			itw++;
 		}
 
+		///////////////////input group
+		it = (graph_->shapes).begin();//int k, l
+		k = 0;
+		while(it != (graph_->shapes).end()){
+			if((*it)->_group == -1){global_int++; dfs_visit((*it));}
 
-
+			it++;
+		}
+		/*
+		vector<Shape*> group_out[global_int+1]; 
+		while(it!= (graph_->shapes).end()){
+			group_out[(*it)->_group].push_back((*it));
+			it++;
+		}
+		while(k != global_int+1){
+			group.push_back();
+			k++;
+		}*/
 
 }
 
@@ -647,63 +691,43 @@ void Graph::printShapes()
 {
 	map<int, Shape *>::iterator it;
 
-
-
-	/*vector<Window*>::iterator itt1;
-	cout<<"sdfsdfsssssssssssssssssssss"<<endl;
-	vector<Shape*>::iterator itt; 
-	vector<Shape*>::iterator itt2;
-	itt1 = windows.begin();
-	itt1++;
-	itt = (*itt1)->member.begin();
-	itt++;
-	flipcolor(*itt);
-	itt2 = flipv.begin();
-	while(itt2!= flipv.end()){
-		cout<<(*itt2)->_id<<"      "<<(*itt2)->color<<endl;
-		itt2++;
-	}
-	cout<<"sdfsdfsssssssssssssssssssss"<<endl;
-	flipbackcolor();
-	itt2 = flipv.begin();
-	while(itt2!= flipv.end()){
-		cout<<(*itt2)->_id<<"      "<<(*itt2)->color<<endl;
-		itt2++;
-	}
-	cout<<"sdfsdfsssssssssssssssssssss"<<endl;*/
-
-
-
-	cout << alpha << ", " << beta << ", " << omega << endl;
+	//cout << alpha << ", " << beta << ", " << omega << endl;
 	for ( it = shapesMap.begin() ; it != shapesMap.end() ; it++ )
 	{
 		Shape *shape = (*it).second;
-		cout << "#shape<"<< shape->_id << ">" << endl;
-		cout << shape->_x0 << ", " << shape->_y0 << ", " << shape->_x1 << ", " << shape->_y1 << endl;
-		cout << "	edges: " << endl;
+		//cout << "#shape<"<< shape->_id << ">" << endl;
+		//cout<< "which group "<<shape->_group<<endl; 
+		//cout << shape->_x0 << ", " << shape->_y0 << ", " << shape->_x1 << ", " << shape->_y1 << endl;
+		//cout << "	edges: " << endl;
 		for(int i=0; i<shape->edge.size();i++) {
-			cout << "	-shape" << shape->edge[i]->getNeighbor(shape)->_id << endl;
+			//cout << "	-shape" << shape->edge[i]->getNeighbor(shape)->_id << endl;
 		}
-		cout << "	color:" << shape->color << endl;
+		//cout << "	color:" << shape->color << endl;
 	}
 
 	vector<Window*>::iterator it1;
 	
-	cout << "Windows: " << windows.size() << endl;
-	cout << "Window length" << omega << endl;
+	//cout << "Windows: " << windows.size() << endl;
+	//cout << "Window length" << omega << endl;
 	for ( it1 = windows.begin() ; it1 != windows.end() ; it1++ )
 	{
-		cout << "#window" << (*it1)->_index1 << (*it1)->_index2 << ":"<< endl;
-		cout << "	density:" << (*it1)->_density1 << ", " << (*it1)->_density2 << endl;
-		cout << "	size:" << (*it1)->member.size() << endl;
-		cout << "	" ;
-		for(int i=0; i<(*it1)->member.size(); i++) 
-			cout << (*it1)->member[i]->_id << ", " ;
-		cout << endl;
+		//cout << "#window" << (*it1)->_index1 << (*it1)->_index2 << ":"<< endl;
+		//cout << "	density:" << (*it1)->_density1 << ", " << (*it1)->_density2 << endl;
+		//cout << "	size:" << (*it1)->member.size() << endl;
+		//cout << "	" ;
+		for(int i=0; i<(*it1)->member.size(); i++)  ;
+			//cout << (*it1)->member[i]->_id << ", " ;
+		//cout << endl;
 	}
 
-	cout << "score:  " << score() << endl;
-
+	float bestscore=0;
+	for(int i=0; i <200; i++) {
+		optimize();
+		float s = score();
+		if(bestscore < s) bestscore = s;
+		//cout <<  "#" << i  << "    "<< bestscore << endl;
+	}
+	cout << "Score:  " << bestscore << endl;
 }
 
 void Graph::printWindows()
@@ -742,7 +766,9 @@ void Graph::reset_travel()
 #include <map>
 #include <cmath>
 
-struct cmpAbsInt {
+//struct cmpAbsInt {
+/*struct cmpAbsInt {
+>>>>>>> 9b81b585bc190d889b1aca0fbdbcc169bed53d51
     bool operator()(const int a, const int b) {//if error, send ref
         return abs(a) < abs(b);
     }
@@ -779,7 +805,51 @@ void Graph::connect() {
 				}
 	}
 }
-
+*/
+class LR{
+public:
+	LR();
+	LR(int v, bool r): value(v), right(r){};
+	int value;
+	bool right;
+};
+struct cmpAbsInt {
+    bool operator()(const LR& a, const LR& b) {//if error, send ref
+        return a.value < b.value;
+    }
+};
+void Graph::connect() {
+	multimap<LR, Shape*, cmpAbsInt> x, y;
+	for(int i = 0; i < shapes.size(); ++i) {
+		x.insert( pair<LR, Shape*>( LR(shapes[i]->_x0, false), shapes[i]) );
+		x.insert( pair<LR, Shape*>( LR(shapes[i]->_x1, true ), shapes[i]) );
+		y.insert( pair<LR, Shape*>( LR(shapes[i]->_y0, false), shapes[i]) );
+		y.insert( pair<LR, Shape*>( LR(shapes[i]->_y1, true ), shapes[i]) );
+	}
+	multimap<LR, Shape*>::iterator i, j;
+	for(i = x.begin(); i != x.end(); ++i) {
+		if((i->first).right)
+			for(j = i; j != x.end() && alpha + (i->first).value > (j->first).value; ++j)
+				if((j->first).right==false) {
+					if( (i->second->_y0 < j->second->_y0 && j->second->_y0 < i->second->_y1)
+					  ||(i->second->_y0 < j->second->_y1 && j->second->_y1 < i->second->_y1)
+					  ||(j->second->_y0 < i->second->_y0 && i->second->_y0 < j->second->_y1)
+					  ||(j->second->_y0 < i->second->_y1 && i->second->_y1 < j->second->_y1) )
+						addEdge(i->second->_id, j->second->_id);
+				}
+	}
+	for(i = y.begin(); i != y.end(); ++i) {
+		if((i->first).right)
+			for(j = i; j != y.end() && beta  + (i->first).value > (j->first).value; ++j)
+				if((j->first).right==false) {
+					if( (i->second->_x0 < j->second->_x0 && j->second->_x0 < i->second->_x1)
+					  ||(i->second->_x0 < j->second->_x1 && j->second->_x1 < i->second->_x1)
+					  ||(j->second->_x0 < i->second->_x0 && i->second->_x0 < j->second->_x1)
+					  ||(j->second->_x0 < i->second->_x1 && i->second->_x1 < j->second->_x1) )
+						addEdge(i->second->_id, j->second->_id);
+				}
+	}
+}
 
 bool WindowCompByDensity( const Window* A, const Window* B ){
 	if(A->_difference > B-> _difference) 
@@ -791,6 +861,15 @@ bool WindowCompByDensity( const Window* A, const Window* B ){
 bool potentionComp(const Shape* A, const Shape* B)
 {
 	if(A->potention > B->potention) return true;
+	return false;
+}
+
+bool areaComp(const Shape* A, const Shape* B)
+{
+	int area_A, area_B;
+	area_A = (A->_x1 - A->_x0) * (A->_y1 - A->_y0);
+	area_B = (B->_x1 - B->_x0) * (B->_y1 - B->_y0);
+	if(area_A > area_B) return true;
 	return false;
 }
 
@@ -854,6 +933,18 @@ void flipbackcolor(){
 }
 */
 
+float Graph::score()
+{
+	float k = windows.size();
+	float score=0.0;
+	float diff=0.0;
+	for(float i=0; i<k ;i++) {
+		score += (70/k) ; cout << "70/k: " <<70/k<< "       score:" << score << endl;
+		diff = (windows[i]->_density1 > windows[i]->_density2)? windows[i]->_density1-windows[i]->_density2 : windows[i]->_density2-windows[i]->_density1; cout << diff<<endl;
+		score -= diff/5;
+	}
+	return score;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Graph::optimize()
@@ -865,8 +956,8 @@ void Graph::optimize()
 	vector<Window*>::iterator it;
 	float	form_diff;
 
-	colorreset();
-
+	//colorreset();
+	
 	for(it = windows.begin(); it != windows.end(); it++) {
 		//int group; use group can avoid duplicated shapes
 		for(int i=0; i<(*it)->member.size(); i++) {
@@ -878,9 +969,12 @@ void Graph::optimize()
 				tasklist.push((*it)->member[i]);
 		}
 	}
-
-	cout << "tasklist_cross.size:" << tasklist_cross.size() << "  tasklist.size:" << tasklist.size() <<endl;
+	//cout << "tasklist_cross.size:" << tasklist_cross.size() << "  tasklist.size:" << tasklist.size() <<endl;
 	//cross window	
+	/*
+	sort(tasklist_cross.front(), tasklist_cross.back(), areaComp);
+	sort(tasklist.front(), tasklist.back(), areaComp);*/
+
 	while(tasklist_cross.size()){
 		Shape* shape = tasklist_cross.front();
 		tasklist_cross.pop();
@@ -905,7 +999,7 @@ void Graph::optimize()
 				flipbackcolor();
 		}	
 	}
-
+	cout<< score() <<endl;
 
 	//set window priority
 	/*
@@ -949,11 +1043,57 @@ void Graph::optimize()
 				}
 			}
 		}
+	}
+
+	for(it = wtable.begin(); it != wtable.end(); it++) {
+		//int group; use group can avoid duplicated shapes
+		for(int i=0; i<(*it)->member.size(); i++) {
+			if((*it)->member[i]->color == 0) cout << "*************" << endl; 
+			cout << (*it)->member[i]->color << endl;
+			if((*it)->member[i]->window.size() > 1 )
+				tasklist_cross.push((*it)->member[i]);
+			else
+				tasklist.push((*it)->member[i]);
+		}
+	}
+
+	while(tasklist_cross.size()){
+		Shape* shape = tasklist_cross.front();
+		tasklist_cross.pop();
+		form_diff = shape->window[0]->_difference;
+		if(!(shape->repeat)) {
+			flipcolor(shape);
+			//shape->window[0]->calden();
+			if(form_diff < shape->window[0]->calden())
+				flipbackcolor();
+		}	
+	}
+
+	//inside window
+	while(tasklist.size() != 0) {
+		Shape* shape = tasklist.front();
+		tasklist.pop();
+		form_diff = shape->window[0]->_difference;
+		if(!(shape->repeat)) {
+			flipcolor(shape);
+			//shape->window[0]->calden();
+			if(form_diff < shape->window[0]->calden())
+				flipbackcolor();
+		}	
 	}*/
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Graph::output(ostream& outfile)
 {/*
+	////////////////////////////////
+
+
+
+
+
+	///////////////////////////////
+
+
 	//output windows
 	for(int i=0; i< windows.size(); i++) {
 		outfile << "WIN[" << i << "]=" << windows[i]->_x0 << "," << windows[i] << ->_y0 << "," 
@@ -1046,26 +1186,57 @@ int Window::area(Shape* a){
 		y1 = y0 + omega;
 	}
 	*/
-	if(a->_y1 > _y1){
-		if(a->_x1 > _x1){
+	if(a->_y1 >= _y1 && a->_y0 <= _y0){
+		if(a->_x1 >= _x1){
+			if(a->_x0 <= _x0){
+				return (_x1 - _x0)*(_y1 - _y0);
+			}
+			else {
+				return (_x1 - a->_x0)*(_y1 - _y0);
+			}
+		}else{
+			if(a->_x0 <= _x0){
+				return (a->_x1 - _x0)*(_y1 - _y0);
+			}else{
+				return(a->_x1 - a->_x0)*(_y1 - _y0);
+			}
+		}
+	}else if(a->_x1 >= _x1 && a->_x0 <= _x0){
+		if(a->_y1 >= _y1){
+			if(a->_y0 <= _y0){
+				return (_x1 - _x0)*(_y1 - _y0);
+			}else{
+				return (_x1 - _x0)*(_y1 - a->_y0);
+			}
+		}else{
+			if(a->_y0 <= _y0){
+				return (_x1 - _x0)*(a->_y1 - _y0);
+			}else{
+				return (_x1 - _x0)*(a->_y1 - a->_y0);
+			}
+		}
+	}
+
+	if(a->_y1 >= _y1){
+		if(a->_x1 >= _x1){
 			return (_x1 - a->_x0)*(_y1 - a->_y0);
-		}else if(a->_x0 < _x0){
+		}else if(a->_x0 <= _x0){
 			return (a->_x1 - _x0)*(_y1 - a->_y0);
 		}else{
 			return (_y1 - a->_y0)*(a->_x1 - a->_x0);
 		}
-	}else if(a->_y0 < _y0){
-		if(a->_x1 > _x1){
+	}else if(a->_y0 <= _y0){
+		if(a->_x1 >= _x1){
 			return (a->_y1 - _y0)*(_x1 - a->_x0);
-		}else if(a->_x0 < _x0){
+		}else if(a->_x0 <= _x0){
 			return (a->_y1 - _y0)*(a->_x1 - _x0);
 		}else{
 			return (a->_y1 - _y0)*(a->_x1 - a->_x0);
 		}
 	}else {
-		if(a->_x1 > _x1){
+		if(a->_x1 >= _x1){
 			return (a->_y1 - a->_y0)*(_x1 - a->_x0);
-		}else if(a->_x0 < _x0){
+		}else if(a->_x0 <= _x0){
 			return (a->_y1 - a->_y0)*(a->_x1 - _x0);
 		}else{
 			return (a->_y1 - a->_y0)*(a->_x1 - a->_x0);
@@ -1080,18 +1251,6 @@ int Window::area(Shape* a){
 	return (countx2 - countx1)*(county2 - county1);*/
 }
 
-float Graph::score()
-{
-	float k = windows.size();
-	float score=0.0;
-	float diff=0.0;
-	for(float i=0; i<k ;i++) {
-		score += (70/k) ; cout << "70/k: " <<70/k<< "       score:" << score << endl;
-		diff = (windows[i]->_density1 > windows[i]->_density2)? windows[i]->_density1-windows[i]->_density2 : windows[i]->_density2-windows[i]->_density1; cout << diff<<endl;
-		score -= diff/5;
-	}
-	return score;
-}
 
 float Window::calden(){
 	//vector<Shape*> member;
@@ -1101,9 +1260,9 @@ float Window::calden(){
 	int color1=0, color2=0;
 	while(it!= member.end()){
 		if((*it)->color == 1){
-			color1 += area(*it);
+			color1 += abs(area(*it));
 		}else if((*it)->color == 2){
-			color2 += area(*it);
+			color2 += abs(area(*it));
 		}
 
 		it++;

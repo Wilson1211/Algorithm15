@@ -432,8 +432,15 @@ bool PrintCmd::exec(int argc, char **argv) {
         graph_->printWindows();
         return true;
     }
+    CommonNs::TmUsage tmusg;
+    CommonNs::TmStat stat;
 
+    tmusg.periodStart();  
     graph_->printShapes();
+
+    tmusg.getPeriodUsage(stat);
+
+    cout << "// runtime = "<< (stat.uTime + stat.sTime) / 1000000.0 << " sec" << endl;
 
     return true;
 }
