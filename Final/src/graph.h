@@ -96,7 +96,11 @@ class Graph{
 		void connect();
 		void reset_travel();
 		void optimize();
+<<<<<<< HEAD
 		void colorreset();
+=======
+		void Colorgroup(Shape*, int);
+>>>>>>> e54409ae5758637181889bc3ad00f51935bf49ee
 		Shape * getShapeById(const int& id);
 
 		//print for debug
