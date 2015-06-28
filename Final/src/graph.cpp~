@@ -852,6 +852,8 @@ void Graph::optimize()
 
 	vector<Window*>::iterator it;
 	float	form_diff;
+
+	cout << "tasklist_cross.size:" << tasklist_cross.size() << "  tasklist.size:" << tasklist.size() <<endl;
 	for(it = windows.begin(); it != windows.end(); it++) {
 		//int group; use group can avoid duplicated shapes
 		for(int i=0; i<(*it)->member.size(); i++) {
@@ -862,6 +864,20 @@ void Graph::optimize()
 		}
 	}
 
+	//cross window	
+	while(tasklist_cross.size()){
+		Shape* shape = tasklist_cross.front();
+		tasklist_cross.pop();
+		form_diff = shape->window[0]->_difference;
+		if(!(shape->repeat)) {
+			flipcolor(shape);
+			//shape->window[0]->calden();
+			if(form_diff < shape->window[0]->calden())
+				flipbackcolor();
+		}	
+	}
+
+	//inside window
 	while(tasklist.size() != 0) {
 		Shape* shape = tasklist.front();
 		tasklist.pop();
@@ -874,17 +890,6 @@ void Graph::optimize()
 		}	
 	}
 
-	while(tasklist_cross.size()){
-		Shape* shape = tasklist_cross.front();
-		tasklist_cross.pop();
-		form_diff = shape->window[0]->_difference;
-		if(!(shape->repeat)) {
-			flipcolor(shape);
-			//shape->window[0]->calden();
-			if(form_diff < shape->window[0]->calden())
-				flipbackcolor();
-		}	
-	}
 	
 
 }

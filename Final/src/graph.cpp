@@ -702,7 +702,7 @@ void Graph::printShapes()
 		cout << endl;
 	}
 
-
+	cout << "score:  " << score() << endl;
 
 }
 
@@ -788,6 +788,18 @@ bool WindowCompByDensity( const Window* A, const Window* B ){
 		return false;
 }
 
+bool potentionComp(const Shape* A, const Shape* B)
+{
+	if(A->potention > B->potention) return true;
+	return false;
+}
+
+bool windowscoreComp(const Window* A, const Window* B)
+{
+	if(A->score > B->score) return true;
+	return false;
+}
+
 
 void Graph::sortWindowsByDensity()
 {
@@ -852,9 +864,14 @@ void Graph::optimize()
 
 	vector<Window*>::iterator it;
 	float	form_diff;
+
+	colorreset();
+
 	for(it = windows.begin(); it != windows.end(); it++) {
 		//int group; use group can avoid duplicated shapes
 		for(int i=0; i<(*it)->member.size(); i++) {
+			if((*it)->member[i]->color == 0) cout << "*************" << endl; 
+			cout << (*it)->member[i]->color << endl;
 			if((*it)->member[i]->window.size() > 1 )
 				tasklist_cross.push((*it)->member[i]);
 			else
@@ -862,6 +879,7 @@ void Graph::optimize()
 		}
 	}
 
+	cout << "tasklist_cross.size:" << tasklist_cross.size() << "  tasklist.size:" << tasklist.size() <<endl;
 	//cross window	
 	while(tasklist_cross.size()){
 		Shape* shape = tasklist_cross.front();
@@ -888,8 +906,50 @@ void Graph::optimize()
 		}	
 	}
 
-	
 
+	//set window priority
+	/*
+	vector<Window*> wtable;
+	for(int i=0; i<windows.size();i++) {
+		Window* w = windows[i];
+		vector<Shape*> s_table;
+		wtable.push_back(w);
+		for(int j=0; j<w->member.size();j++) {
+			s_table.push_back(w->member[j]);
+			w->member[j]->potention = w->area(w->member[j]);
+		}
+		sort(s_table.begin(), s_table.end(), potentionComp);
+		//calculate window area potention
+		int p = 0;
+		for(int k=0; k < s_table.size(); k++){
+			if(p<=0) p+=s_table[k]->potention ;
+			else p -=s_table[k]->potention ;
+		}
+		windows[i]->score = abs(p);
+	}
+	sort(wtable.begin(), wtable.end(), windowscoreComp);
+	//colorgroup(s, color);
+
+	for(int i=0; i<wtable.size(); i++) { cout << "wwwwwwwwww" << endl;
+		sort(wtable[i]->member.begin(), wtable[i]->member.end(), potentionComp);
+		int coloring = 0;
+		for(int j=0; j<wtable[i]->member.size();j++){
+			//shapes has been sorted?
+			//color crosswindow shapes
+			if(wtable[i]->member[j]->window.size()>1) {
+				if(coloring <= 0) {
+					wtable[i]->member[j]->color = 1;
+					coloring += wtable[i]->member[j]->potention; cout << "potention : " << wtable[i]->member[j]->potention
+											     << "coloring : " << coloring << endl;
+				}
+				else {
+					wtable[i]->member[j]->color = 2;
+					coloring -= wtable[i]->member[j]->potention; cout << "potention : " << wtable[i]->member[j]->potention
+											     << "coloring : " << coloring << endl;
+				}
+			}
+		}
+	}*/
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Graph::output(ostream& outfile)
@@ -1020,6 +1080,19 @@ int Window::area(Shape* a){
 	return (countx2 - countx1)*(county2 - county1);*/
 }
 
+float Graph::score()
+{
+	float k = windows.size();
+	float score=0.0;
+	float diff=0.0;
+	for(float i=0; i<k ;i++) {
+		score += (70/k) ; cout << "70/k: " <<70/k<< "       score:" << score << endl;
+		diff = (windows[i]->_density1 > windows[i]->_density2)? windows[i]->_density1-windows[i]->_density2 : windows[i]->_density2-windows[i]->_density1; cout << diff<<endl;
+		score -= diff/5;
+	}
+	return score;
+}
+
 float Window::calden(){
 	//vector<Shape*> member;
 	vector<Shape*>::iterator it = member.begin();
@@ -1040,9 +1113,43 @@ float Window::calden(){
 	//cout<<"color2 "<<color2<<endl;
 
 
-	_density1 = 100*(float)color1 / (omega*omega);
-	_density2 = 100*(float)color2 / (omega*omega);
+	_density1 = /*100**/(float)color1 / (omega*omega);
+	_density2 = /*100**/(float)color2 / (omega*omega);
 	_difference = _density1 - _density2;
 	_difference = (_difference > 0)? _difference: -_difference;
 	return _difference;	
 }
+
+void Graph::colorreset()
+{
+	vector<Window*>::iterator it;
+	for(it = windows.begin(); it != windows.end(); it++) {
+		for(int i=0; i<(*it)->member.size(); i++) {
+			(*it)->member[i]->color = 10;
+		}
+	}
+}
+
+void colorgroup(Shape* s, int color) 
+{
+
+}
+/*
+void color (Shape* s, queue<Shape*>& list, int color) 
+{
+	s->colortravel = true;
+	bool flag = true;
+	for(int i=0; i<s.edge.size();i++) {
+		if(s->edge[i]->getNeighbor(s)->color == color) {
+			flag = false; cout << "*******************coloring wrong****************" << endl;
+		}
+	}
+	s->color = color ;
+
+	if(s->edge.size() !=0) {
+		for(int i=0; i<s->edge.size(); i++) {
+			
+		}
+	}
+}*/
+
