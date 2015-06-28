@@ -461,6 +461,11 @@ void dfs_visit(Shape* u){
 
 }
 
+void Graph::Colorgroup(Shape* u, int c){
+	u->color = c;
+	Colorvisit(u);
+
+}
 //int global_int = -1;
 void Graph::Color()
 {
